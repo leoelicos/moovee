@@ -1,0 +1,22 @@
+.error-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  font-family: arial, Helvetica, sans-serif;
+  color: white;
+}
+.error-page h1 {
+  padding: 1vh 1vw;
+  font-size: 2rem;
+  color: green;
+}
+.error-page code {
+  padding: 1vh 1vw;
+  font-size: 1.5rem;
+  color: blueviolet;
+}/*# sourceMappingURL=index.css.map */
