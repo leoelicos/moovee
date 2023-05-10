@@ -3,7 +3,6 @@ import axios from 'axios'
 const { REACT_APP_OMDB_KEY } = process.env
 
 export default async function OMDbAPIBySearch(string) {
-  let data = []
   try {
     if (string === undefined) {
       throw new Error('omdbapiBySearch: No query')
@@ -18,8 +17,8 @@ export default async function OMDbAPIBySearch(string) {
     return data
   } catch (error) {
     console.error(error)
+    return []
   }
-  return data
 }
 
 const query = async (id) =>

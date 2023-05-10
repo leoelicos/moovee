@@ -17,9 +17,8 @@ export default async function OMDbAPIById(id) {
     return data
   } catch (error) {
     console.error(error)
+    return []
   }
-
-  return null
 }
 
 const query = async (id) =>
