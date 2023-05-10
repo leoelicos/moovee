@@ -1,39 +1,43 @@
-// import axios from 'axios'
+import axios from 'axios'
 
 const { REACT_APP_GAPI_KEY } = process.env
 
-export default async function googleapisYouTubeV3Search(term) {
-  let response = null
+export default async function googleapisYouTubeV3Search(query) {
   try {
-    if (term === undefined) {
-      throw new Error('googleapisYouTubeV3Search: No term to search')
-    } else if (REACT_APP_GAPI_KEY === undefined) {
-      throw new Error('Gapi key undefined')
-    } else {
-      // var uri = 'https://www.googleapis.com/youtube/v3/search'
-      /*       var params = {
-        part: 'snippet',
-        key: REACT_APP_GAPI_KEY,
-        q: term,
-        type: 'video'
-      } */
-      // response = await axios(uri, { params })
-      response = await mockGoogle()
+    if (!query) {
+      throw new Error('googleapisYouTubeV3Search: No query')
     }
+
+    if (REACT_APP_GAPI_KEY === undefined) {
+      throw new Error('googleapisYouTubeV3Search: No key')
+    }
+
+    // return await query(str)
+    return await mockQuery()
   } catch (e) {
     console.error(e)
-  } finally {
-    return response
   }
 }
+function query(str) {
+  var uri = 'https://www.googleapis.com/youtube/v3/search'
+  var params = {
+    part: 'snippet',
+    key: REACT_APP_GAPI_KEY,
+    q: str,
+    type: 'video'
+  }
+  return axios(uri, { params })
+}
 
-const mockGoogle = () =>
-  new Promise((resolve) => {
+function mockQuery() {
+  const mockData = {
+    data: {
+      items: [{ id: { videoId: 'bKn-NdqSkU4' } }]
+    }
+  }
+  return new Promise((resolve) => {
     setTimeout(() => {
-      resolve({
-        data: {
-          items: [{ id: { videoId: 'bKn-NdqSkU4' } }]
-        }
-      })
+      resolve(mockData)
     }, 1000)
   })
+}
