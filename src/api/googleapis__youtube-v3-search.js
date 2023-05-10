@@ -2,9 +2,9 @@ import axios from 'axios'
 
 const { REACT_APP_GAPI_KEY } = process.env
 
-export default async function googleapisYouTubeV3Search(query) {
+export default async function googleapisYouTubeV3Search(string) {
   try {
-    if (!query) {
+    if (!string) {
       throw new Error('googleapisYouTubeV3Search: No query')
     }
 
