@@ -16,6 +16,7 @@ export default async function googleapisYouTubeV3Search(string) {
     return await mockQuery()
   } catch (e) {
     console.error(e)
+    return null
   }
 }
 function query(str) {
