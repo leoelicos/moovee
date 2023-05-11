@@ -7,21 +7,20 @@ export default async function TMDbAPIBySearch() {
     if (!REACT_APP_TMDB_KEY) {
       throw new Error('themoviedbGetPopularMovies: No Key')
     }
-
     const res = await query()
-    const data = extractData(res)
-    return data
+
+    return extractTitles(res)
   } catch (error) {
     console.error(error)
     return []
   }
 }
 
-const query = async () =>
-  await axios('https://api.themoviedb.org/3/movie/popular', {
-    api_key: REACT_APP_TMDB_KEY,
-    language: 'en-US',
-    page: 1
-  })
+const query = async () => {
+  console.log({ REACT_APP_TMDB_KEY })
+  const result = await axios('https://api.themoviedb.org/3/movie/popular?api_key=181c54b33929efb327bf34779a8274dd&language=en-US&page=1')
+  console.log({ result })
+  return result
+}
 
-const extractData = (res) => res.data.results.map(({ title }) => title)
+const extractTitles = (res) => res.data.results.map(({ title }) => title)
