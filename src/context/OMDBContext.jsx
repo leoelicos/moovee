@@ -1,6 +1,7 @@
 import { createContext, useReducer } from 'react'
 
 export const OMDBContext = createContext(null)
+
 export const OMDBDispatchContext = createContext(null)
 
 export default function OMDBProvider({ children }) {
