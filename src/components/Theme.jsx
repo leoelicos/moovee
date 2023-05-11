@@ -1,4 +1,3 @@
-/* components */
 import { ConfigProvider } from 'antd'
 
 export default function OrangeTheme({ children }) {
