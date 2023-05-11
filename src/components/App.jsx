@@ -14,7 +14,7 @@ export default function Moovee() {
       <div className='moovee'>
         <Theme>
           <Header />
-          <main className='body'>
+          <main>
             <Outlet />
           </main>
           <Footer />
