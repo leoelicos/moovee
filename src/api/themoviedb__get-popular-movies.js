@@ -18,7 +18,9 @@ export default async function TMDbAPIBySearch() {
 
 const query = async () => {
   console.log({ REACT_APP_TMDB_KEY })
+
   const result = await axios(`https://api.themoviedb.org/3/movie/popular?api_key=${REACT_APP_TMDB_KEY}`, { page: 1, language: 'en-US' })
+
   console.log({ result })
   return result
 }
