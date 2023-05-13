@@ -1,31 +1,32 @@
-import { useEffect } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 // import useOMDB from '../../../hooks/useOMDB.js'
 import SearchBar from './SearchBar/index.jsx'
 import SearchHistory from './SearchHistory/index.jsx'
 import cleanQuery from './cleanQuery.js'
 
-export default function Search() {
+export default function Search({ query: initialQuery }) {
+  const [searchText, setSearchText] = useState('')
+
   const navigate = useNavigate()
-  function goToResults(query) {
+  function handleSubmit(query) {
+    /* change searchbar state */
     navigate(`/results?q=${cleanQuery(query)}`)
   }
 
-  const [searchParams] = useSearchParams()
-  const query = searchParams.get('q')
-  console.log({ query })
-
   useEffect(() => {
-    console.log('searchOMDB')
-  }, [query])
+    setSearchText(initialQuery)
+  }, [initialQuery])
 
   return (
     <div className='header-elements'>
       <SearchBar
         // loading={omdbLoading}
-        handleSubmit={goToResults}
+        handleSubmit={handleSubmit}
+        searchText={searchText}
+        setSearchText={setSearchText}
       />
-      <SearchHistory handleSubmit={goToResults} />
+      <SearchHistory handleSubmit={handleSubmit} />
     </div>
   )
 }

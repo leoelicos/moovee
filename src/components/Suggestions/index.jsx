@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import useTMDB from '../../hooks/useTMDB.js'
 import { Tag } from 'antd'
+import { useNavigate } from 'react-router-dom'
+import cleanQuery from '../Header/Search/cleanQuery.js'
 
 export default function Suggestions({ nav }) {
   const { loading, movieTitles, search } = useTMDB()
@@ -8,9 +10,17 @@ export default function Suggestions({ nav }) {
   useEffect(() => {
     search()
   }, [search])
-  const handleClick = (text) => {
-    console.log('handleClick ', text)
+  const navigate = useNavigate()
+  function goToResults(query) {
+    const cleanedQuery = cleanQuery(query)
+    const nextPage = `/results?q=${cleanedQuery}`
+    navigate(nextPage)
   }
+
+  const handleClick = (text) => {
+    goToResults(text)
+  }
+
   if (loading) return 'loading'
   return (
     <ul className='suggestions'>

@@ -5,22 +5,27 @@ export const OMDBContext = createContext(null)
 export const OMDBDispatchContext = createContext(null)
 
 export default function OMDBProvider({ children }) {
-  const initialResults = []
-  const [movieResults, dispatch] = useReducer(omdbReducer, initialResults)
+  const initialState = {
+    omdbLoading: false,
+    omdbMovies: []
+  }
+  const [state, dispatch] = useReducer(omdbReducer, initialState)
 
   return (
-    <OMDBContext.Provider value={movieResults}>
+    <OMDBContext.Provider value={state}>
       <OMDBDispatchContext.Provider value={dispatch}>{children}</OMDBDispatchContext.Provider>
     </OMDBContext.Provider>
   )
 }
 
-function omdbReducer(omdb, { type, action }) {
+function omdbReducer(state, { type, action }) {
   switch (type) {
-    case 'searchedOMDB': {
-      console.log('search')
-      if (!omdb) return [] /* init */
-      return action.movies
+    case 'setMovies': {
+      return { ...state, omdbMovies: action.omdbMovies }
+    }
+
+    case 'setLoading': {
+      return { ...state, omdbLoading: action.omdbLoading }
     }
 
     default: {
