@@ -14,7 +14,7 @@ const parse = (imdbID, data) => ({
   imdbRating: data.Ratings?.length === 0 ? null : parseFloat(data.Ratings.find((r) => r.Source === 'Internet Movie Database').Value)
 })
 
-const useOMDB = () => {
+export default function useOMDB() {
   const [omdbLoading, setOmdbLoading] = useState(null)
   const [omdbMovies, setOmdbMovies] = useState([])
   const searchOMDB = async (str) => {
@@ -38,5 +38,3 @@ const useOMDB = () => {
   }
   return { omdbLoading, omdbMovies, searchOMDB }
 }
-
-export default useOMDB
