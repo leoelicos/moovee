@@ -13,6 +13,7 @@ export default function Results() {
   const [trailerWasClicked, setTrailerWasClicked] = useState(false)
 
   if (omdbLoading) return <ResultsLoading />
+  if (!omdbMovies) return <h1>OMDB Error</h1>
   if (!omdbMovies.length) return <ResultsEmpty />
 
   return (
