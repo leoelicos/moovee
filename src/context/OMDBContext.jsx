@@ -1,4 +1,5 @@
 import { createContext, useReducer } from 'react'
+import useOMDB from '../hooks/useOMDB'
 
 export const OMDBContext = createContext(null)
 
