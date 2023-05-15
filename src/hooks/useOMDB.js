@@ -18,6 +18,7 @@ export default function useOMDB() {
   const [omdbLoading, setOmdbLoading] = useState(null)
   const [omdbMovies, setOmdbMovies] = useState([])
   const searchOMDB = async (str) => {
+    console.log('searchOMDB', { str })
     setOmdbLoading(true)
     try {
       const searchData = await OMDbAPIBySearch(str)
