@@ -19,6 +19,7 @@ export default function Moovee() {
 
   const init = useCallback(() => {
     console.log('App useEffect', { query })
+    if (!query.length) return
     searchOMDB(query)
     dispatchOMDB({
       type: 'setLoading',
@@ -34,11 +35,11 @@ export default function Moovee() {
       type: 'setLoading',
       action: false
     })
-  }, [dispatchOMDB, omdbMovies, searchOMDB])
+  }, [dispatchOMDB, omdbMovies, searchOMDB, query])
 
   useEffect(() => {
     init()
-  }, [])
+  }, [init])
 
   return (
     <div className='moovee'>
