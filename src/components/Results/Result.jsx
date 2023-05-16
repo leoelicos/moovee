@@ -1,23 +1,15 @@
-/* components */
-import { Tag, Button, Modal, Collapse } from 'antd'
-
 import { useState } from 'react'
+import { Tag, Button, Modal, Collapse } from 'antd'
 import useYouTube from '../../hooks/useYouTube'
 import Trailer from './Trailer.jsx'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilm, faStar } from '@fortawesome/free-solid-svg-icons'
+import Poster from './Poster.jsx'
+import NoPoster from './NoPoster.jsx'
 
-function NoPoster({ title }) {
-  return (
-    <div className='noposter'>
-      <div className='title'>{title}</div>
-      <div className='text'>No poster</div>
-    </div>
-  )
-}
 const { Panel } = Collapse
 
-const Result = ({
+export default function Result({
   poster,
   title,
   esrb,
@@ -32,7 +24,7 @@ const Result = ({
   resetIdxOfClickedTrailer,
   trailerWasClicked,
   setTrailerWasClicked
-}) => {
+}) {
   const { youTubeData, youTubeLoading, youTubeError, searchYouTube } = useYouTube()
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -57,18 +49,7 @@ const Result = ({
 
   return (
     <div className='result-container'>
-      {poster ? (
-        <div className='movie-poster'>
-          <img
-            src={poster}
-            alt='movie poster'
-          />
-        </div>
-      ) : (
-        <div className='movie-poster'>
-          <NoPoster title={title} />
-        </div>
-      )}
+      {poster ? <Poster src={src} /> : <NoPoster title={title} />}
 
       <div className='result'>
         <Button
@@ -134,42 +115,40 @@ const Result = ({
               </span>
             }>
             {
-              <>
-                <div className='deets'>
-                  <h3 className='title'>{title || 'Untitled'}</h3>
+              <div className='deets'>
+                <h3 className='title'>{title || 'Untitled'}</h3>
 
-                  {year && <div className='year'>{year}</div>}
+                {year && <div className='year'>{year}</div>}
 
-                  {esrb && <div className='esrb'>{esrb}</div>}
+                {esrb && <div className='esrb'>{esrb}</div>}
 
-                  {plot && <div className='plot'>{plot}</div>}
+                {plot && <div className='plot'>{plot}</div>}
 
-                  {actors.length > 0 && (
-                    <div className='actors'>
-                      {actors.split(', ').map((actor, i) => (
-                        <Tag
-                          key={i}
-                          color='#222'
-                          style={{ color: 'white' }}>
-                          {actor}
-                        </Tag>
-                      ))}
-                    </div>
-                  )}
+                {actors.length > 0 && (
+                  <div className='actors'>
+                    {actors.split(', ').map((actor, i) => (
+                      <Tag
+                        key={i}
+                        color='#222'
+                        style={{ color: 'white' }}>
+                        {actor}
+                      </Tag>
+                    ))}
+                  </div>
+                )}
 
-                  {genre && (
-                    <div className='genre'>
-                      {genre.map((g, i) => (
-                        <Tag
-                          color='black'
-                          key={i}>
-                          {g}
-                        </Tag>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </>
+                {genre && (
+                  <div className='genre'>
+                    {genre.map((g, i) => (
+                      <Tag
+                        color='black'
+                        key={i}>
+                        {g}
+                      </Tag>
+                    ))}
+                  </div>
+                )}
+              </div>
             }
           </Panel>
         </Collapse>
@@ -199,4 +178,3 @@ const Result = ({
     </div>
   )
 }
-export default Result
