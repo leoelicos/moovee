@@ -1,50 +1,24 @@
-import { useCallback, useContext, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams, Outlet } from 'react-router-dom'
-
-import { OMDBDispatchContext } from '../context/OMDBContext.jsx'
 
 import Header from './Header/index.jsx'
 import Footer from './Footer/index.jsx'
 import Theme from './Theme.jsx'
 
-import useOMDB from '../hooks/useOMDB.js'
-
 import '../style/index.css'
 
 export default function Moovee() {
-  const dispatchOMDB = useContext(OMDBDispatchContext)
   const [searchParams] = useSearchParams()
-  const { omdbMovies, searchOMDB } = useOMDB()
-  const query = searchParams.get('q') || ''
-
-  const init = useCallback(() => {
-    console.log('App useEffect', { query })
-    if (!query.length) return
-    searchOMDB(query)
-    dispatchOMDB({
-      type: 'setLoading',
-      action: true
-    })
-
-    dispatchOMDB({
-      type: 'setMovies',
-      action: omdbMovies
-    })
-
-    dispatchOMDB({
-      type: 'setLoading',
-      action: false
-    })
-  }, [dispatchOMDB, omdbMovies, searchOMDB, query])
-
+  const [query, setQuery] = useState(searchParams.get('q') || '')
+  console.log({ query })
   useEffect(() => {
-    init()
-  }, [init])
+    setQuery(searchParams.get('q') || '')
+  }, [searchParams])
 
   return (
     <div className='moovee'>
       <Theme>
-        <Header query={query} />
+        <Header initialQuery={query.current} />
         <main>
           <Outlet />
         </main>
