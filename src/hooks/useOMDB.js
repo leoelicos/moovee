@@ -1,9 +1,12 @@
-import { useState } from 'react'
-import OMDbAPIById from '../api/omdbapi__by-id-or-title'
-import OMDbAPIBySearch from '../api/omdbapi__by-search'
+//* useOMDB: loading and data states for OMDB API
+//? searchOMDB(str) OMDB By Search
+//? searchOMDBByID(id) OMDB By Id
+
+import { useCallback, useState } from 'react'
+const { REACT_APP_OMDB_KEY: key } = process.env
 
 const parse = (imdbID, data) => ({
-  imdbID,
+  imdbID: imdbID,
   poster: data.Poster === 'N/A' ? null : data.Poster,
   title: data.Title === 'N/A' ? null : data.Title,
   esrb: data.Rated === 'N/A' ? null : data.Rated,
@@ -17,25 +20,22 @@ const parse = (imdbID, data) => ({
 export default function useOMDB() {
   const [omdbLoading, setOmdbLoading] = useState(null)
   const [omdbMovies, setOmdbMovies] = useState([])
-  const searchOMDB = async (str) => {
+
+  const searchOMDB = useCallback(async (str) => {
     console.log('searchOMDB', { str })
     setOmdbLoading(true)
     try {
-      const searchData = await OMDbAPIBySearch(str)
-      const promises = searchData
-        .filter((v) => v.hasOwnProperty('imdbID'))
-        .map(async ({ imdbID }) => {
-          const x = await OMDbAPIById(imdbID)
-          return parse(imdbID, x)
-        })
-      const movies = await Promise.all(promises)
-
+      const res = await fetch(`https://www.omdbapi.com?apikey=${key}&type=movie&page=1&s=${str}`)
+      const data = await res.json()
+      const { Search } = data
+      const movies = Search.filter((v) => v.hasOwnProperty('imdbID'))
       setOmdbMovies(movies)
     } catch (error) {
       console.error(error)
     } finally {
       setOmdbLoading(false)
     }
-  }
+  }, [])
+
   return { omdbLoading, omdbMovies, searchOMDB }
 }

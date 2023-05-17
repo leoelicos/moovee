@@ -26,7 +26,7 @@ export default function SearchHistory({ handleSubmit }) {
       dropdownMatchSelectWidth={false}
       bordered={false}
       suffixIcon={<FontAwesomeIcon icon={faCaretSquareDown} />}
-      placeholder='Search history'
+      placeholder='History'
       options={historyOptions}
       onChange={handleSubmit}
     />

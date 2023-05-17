@@ -5,7 +5,7 @@ export default function OrangeTheme({ children }) {
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: '#ed7d31'
+          colorPrimary: '#ffaaaa'
         }
       }}>
       {children}

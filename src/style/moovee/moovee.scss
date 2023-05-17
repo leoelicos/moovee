@@ -1,36 +1,48 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
+* {
+  box-sizing: border-box;
+}
+
 .moovee {
   font-family: 'Montserrat', sans-serif;
-  background-color: rgb(0, 0, 0);
-  color: azure;
+  background-color: rgb(1, 1, 1);
+
   width: 100%;
+  overflow-x: hidden;
   height: 100vh;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  gap: 2vh;
 
   header {
     width: 100%;
-    background-color: black;
-    box-shadow: 0px 2px 2px -1px white;
-
-    margin: 0 auto;
-    box-shadow: none;
-
+    position: relative;
+    margin: 0 auto 2vh 0;
     display: flex;
     flex-direction: column;
-    max-width: 450px;
-    flex-direction: column;
     align-items: center;
+    box-sizing: border-box;
+    gap: 1vh 1vw;
+    padding: 1vh 1vw;
 
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      margin: 0 -6px;
+      box-shadow: 0px 0px 2vh 0px #ffaaaa;
+    }
     img {
       margin-bottom: 0;
 
-      height: auto;
-      width: 50px;
+      width: 10vh;
 
       margin-right: unset;
     }
@@ -42,24 +54,8 @@
       font-family: cursive;
     }
 
-    .header-elements {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
     @media (min-width: 500px) {
-      width: 100%;
-      max-width: calc(900px + 16px);
-      margin: 0 auto;
-      display: flex;
-      gap: 2px;
-
-      img {
-        height: 32px;
-        width: unset;
-        margin-right: 4px;
-      }
+      flex-direction: row;
 
       .movie-search {
         flex: 3;
@@ -74,23 +70,63 @@
   }
 
   main {
-    flex: 1;
-
+    flex: 1 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: center;
     width: 100%;
     height: 100%;
-    max-width: calc(900px + 16px);
 
-    ul.suggestions {
-      width: 100%;
-      height: 200px;
-      background-color: white;
-      display: flex;
-      flex-flow: row wrap;
-      margin: 0;
-      padding: 0;
+    .suggestions {
+      h1.heading {
+        color: white;
+        text-align: center;
+        font-size: 1.5rem;
+      }
+
+      ul.list {
+        padding: 1rem;
+        margin: 1rem;
+        background-color: rgba(white, 0.1);
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        gap: 1vh 1vw;
+        border-radius: 1rem;
+
+        span {
+          padding: 1vh 1vw;
+          line-height: 1;
+          cursor: pointer;
+          position: relative;
+          user-select: none;
+          &:hover::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 1;
+            background-color: white;
+            border: none;
+            opacity: 0.3;
+          }
+          &:active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 1;
+            background-color: black;
+            border: none;
+            opacity: 0.3;
+          }
+        }
+      }
     }
 
     .loading-spin {
@@ -104,8 +140,9 @@
     div {
       div.movie-grid {
         gap: 4px !important;
-        max-width: calc(900px + 8px);
-        @media screen and (min-width: calc(900px + 8px)) {
+        max-width: 1200px;
+
+        @media (min-width: 1200px) {
           margin: auto;
         }
 
@@ -322,7 +359,7 @@
     }
   }
   footer {
-    border-top: 1px solid white;
+    border-top: 1px solid #ffaaaa;
     padding: 1vh 0;
     width: 100%;
     display: flex;
@@ -333,7 +370,7 @@
       border: none;
       outline: none;
       cursor: pointer;
-      color: #ed7d31;
+      color: #ffaaaa;
       display: flex;
       align-items: center;
       justify-content: center;

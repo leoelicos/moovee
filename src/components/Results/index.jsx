@@ -1,16 +1,25 @@
-import { useContext, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import Result from './Result.jsx'
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry'
 import ResultsLoading from './ResultsLoading.jsx'
 import ResultsEmpty from './ResultsEmpty.jsx'
-import { OMDBContext } from '../../context/OMDBContext.jsx'
+import { useSearchParams } from 'react-router-dom'
+import useOMDB from '../../hooks/useOMDB.js'
 
 export default function Results() {
-  const { omdbLoading, omdbMovies } = useContext(OMDBContext)
+  const { omdbLoading, omdbMovies, searchOMDB } = useOMDB()
 
   const [idxOfClickedTrailer, setIdxOfClickedTrailer] = useState(-1)
   const [trailerWasClicked, setTrailerWasClicked] = useState(false)
+  const [searchParams] = useSearchParams()
+  const query = searchParams.get('q')
+
+  useEffect(() => {
+    console.log('useEffect Results')
+    if (!query) return
+    searchOMDB(query)
+  }, [searchOMDB, query])
 
   if (omdbLoading) return <ResultsLoading />
   if (!omdbMovies) return <h1>OMDB Error</h1>

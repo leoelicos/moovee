@@ -4,6 +4,7 @@ const useLocalStorage = (key) => {
   const [history, setHistory] = useState(JSON.parse(localStorage.getItem(key) || '[]'))
 
   useEffect(() => {
+    console.log('useEffect localstorage')
     if (history?.length > 0) localStorage.setItem(key, JSON.stringify(history))
   }, [history, key])
 
