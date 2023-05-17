@@ -1,13 +1,14 @@
-import axios from 'axios'
-
 const { REACT_APP_OMDB_KEY: key } = process.env
 
 export default async function OMDbAPIBySearch(string) {
+  console.log('bySearch', { string, key })
   try {
     if (string === undefined) throw new Error('omdbapiBySearch: No query')
     if (key === undefined) throw new Error('omdbapiBySearch: No key')
     const res = await query(string)
-    const data = extractData(res)
+    const parsed = await res.json()
+    const data = extractData(parsed)
+    console.log({ res, parsed, data })
     return data
   } catch (error) {
     console.error(error)
@@ -15,8 +16,6 @@ export default async function OMDbAPIBySearch(string) {
   }
 }
 
-const uri = 'https://www.omdbapi.com'
-const options = { apikey: key, type: 'movie', page: 1 }
-const query = async (str) => await axios(uri, { ...options, s: str })
+const query = (str) => fetch(`https://www.omdbapi.com?apikey=${key}&type=movie&page=1&s=${str}`)
 
-const extractData = (res) => res.data.Search
+const extractData = (res) => res.Search
