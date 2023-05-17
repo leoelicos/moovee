@@ -49,7 +49,7 @@ export default function Result({
 
   return (
     <div className='result-container'>
-      {poster ? <Poster src={src} /> : <NoPoster title={title} />}
+      {poster ? <Poster src={poster} /> : <NoPoster title={title} />}
 
       <div className='result'>
         <Button
@@ -124,7 +124,7 @@ export default function Result({
 
                 {plot && <div className='plot'>{plot}</div>}
 
-                {actors.length > 0 && (
+                {actors && actors.length > 0 && (
                   <div className='actors'>
                     {actors.split(', ').map((actor, i) => (
                       <Tag
@@ -137,7 +137,7 @@ export default function Result({
                   </div>
                 )}
 
-                {genre && (
+                {genre && genre.length > 0 && (
                   <div className='genre'>
                     {genre.map((g, i) => (
                       <Tag
