@@ -9,7 +9,7 @@ export default function SearchBar({ handleSubmit, searchText, setSearchText }) {
       // loading={omdbLoading}
       allowClear={true}
       className='movie-search'
-      placeholder={'Any movie name…'}
+      placeholder={'Search for a movie'}
       enterButton={<FontAwesomeIcon icon={faSearch} />}
       onSearch={handleSubmit}
       onChange={(e) => setSearchText(e.target.value)}
