@@ -16,7 +16,6 @@ export default function Results() {
   const query = searchParams.get('q')
 
   useEffect(() => {
-    console.log('useEffect Results')
     if (!query) return
     searchOMDB(query)
   }, [searchOMDB, query])
@@ -26,8 +25,10 @@ export default function Results() {
   if (!omdbMovies.length) return <ResultsEmpty />
 
   return (
-    <ResponsiveMasonry columnsCountBreakPoints={{ 0: 1, 450: 2, 679: 3 }}>
-      <Masonry className='movie-grid'>
+    <ResponsiveMasonry
+      columnsCountBreakPoints={{ 0: 1, 450: 2, 679: 3 }}
+      className='masonry-wrapper'>
+      <Masonry className='masonry'>
         {omdbMovies.map((movie, i) => (
           <Result
             key={i}
