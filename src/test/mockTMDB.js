@@ -1,0 +1,2 @@
+const array = ['The Super Mario Bros. Movie', 'Evil Dead Rise', 'Ant-Man and the Wasp: Quantumania', 'Fast X', "The Pope's Exorcist", 'Guardians of the Galaxy Vol. 3', 'Ghosted', 'Avatar: The Way of Water', 'Shazam! Fury of the Gods', "Guy Ritchie's The Covenant", 'AKA', 'John Wick: Chapter 4', '¡Que Viva México!', 'Creed III', 'Scream VI', 'The Wandering Earth II', 'Battle for Saipan', 'Renfield', 'Hunt', 'The Last Kingdom: Seven Kings Must Die']
+export default array
