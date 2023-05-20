@@ -124,16 +124,19 @@
   align-items: center;
   justify-content: center;
 }
-.moovee main div div.movie-grid {
+.moovee main div.masonry-wrapper {
+  width: 100%;
+}
+.moovee main div.masonry-wrapper div.masonry {
   gap: 4px !important;
   max-width: 1200px;
 }
 @media (min-width: 1200px) {
-  .moovee main div div.movie-grid {
+  .moovee main div.masonry-wrapper div.masonry {
     margin: auto;
   }
 }
-.moovee main div div.movie-grid div div.result-container {
+.moovee main div.masonry-wrapper div.masonry div div.result-container {
   text-align: center;
   width: 100%;
   max-width: 449px;
@@ -144,24 +147,24 @@
   border-radius: 1rem;
   background: radial-gradient(circle, #000000 0%, rgba(255, 255, 255, 0.1019607843) 50%, rgba(255, 255, 255, 0.3019607843) 100%);
 }
-.moovee main div div.movie-grid div div.result-container.empty {
+.moovee main div.masonry-wrapper div.masonry div div.result-container.empty {
   background: none;
   border-radius: 0;
 }
-.moovee main div div.movie-grid div div.result-container.empty h5 {
+.moovee main div.masonry-wrapper div.masonry div div.result-container.empty h5 {
   color: white;
   font-size: 1.2rem;
 }
-.moovee main div div.movie-grid div div.result-container.empty h5 svg {
+.moovee main div.masonry-wrapper div.masonry div div.result-container.empty h5 svg {
   color: pink;
   display: inline-block;
   margin-bottom: 1px;
   font-size: 0.8rem;
 }
-.moovee main div div.movie-grid div div.result-container .movie-poster {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .movie-poster {
   line-height: 0;
 }
-.moovee main div div.movie-grid div div.result-container .movie-poster img {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .movie-poster img {
   width: 100%;
   border-radius: 1rem 1rem 0 0;
   -o-object-fit: cover;
@@ -169,20 +172,20 @@
   -o-object-position: cover;
      object-position: cover;
 }
-.moovee main div div.movie-grid div div.result-container .movie-poster .noposter {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .movie-poster .noposter {
   line-height: 1.15;
   padding: max(32px, 4vh) 0;
 }
-.moovee main div div.movie-grid div div.result-container .movie-poster .noposter .title {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .movie-poster .noposter .title {
   color: #ed7d31;
 }
-.moovee main div div.movie-grid div div.result-container .movie-poster .noposter .text {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .movie-poster .noposter .text {
   font-style: italic;
 }
-.moovee main div div.movie-grid div div.result-container .result {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result {
   display: flex;
 }
-.moovee main div div.movie-grid div div.result-container .result button.trailer-btn {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result button.trailer-btn {
   height: 100%;
   width: -moz-min-content;
   width: min-content;
@@ -194,7 +197,7 @@
   border-radius: 0 0 0 1rem;
   padding: 4px 8px 4px 16px;
 }
-.moovee main div div.movie-grid div div.result-container .result div.details {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details {
   display: flex;
   background-color: rgb(46, 46, 46);
   flex-direction: column;
@@ -205,7 +208,7 @@
   border-radius: 0;
   border-bottom-right-radius: 1rem;
 }
-.moovee main div div.movie-grid div div.result-container .result div.details div.ant-collapse-item {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details div.ant-collapse-item {
   width: 100%;
   height: 100%;
   display: flex;
@@ -213,22 +216,22 @@
   justify-content: center;
   background-color: hsl(0, 0%, 20%);
 }
-.moovee main div div.movie-grid div div.result-container .result div.details div.ant-collapse-item.ant-collapse-item-active div.ant-collapse-header {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details div.ant-collapse-item.ant-collapse-item-active div.ant-collapse-header {
   border-radius: 0;
   flex-basis: content;
 }
-.moovee main div div.movie-grid div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-header {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-header {
   padding: 4px 8px;
   position: relative;
   font-size: 16px;
   border-bottom-right-radius: 1rem;
   flex-basis: 100%;
 }
-.moovee main div div.movie-grid div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-header:hover {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-header:hover {
   background-color: #dddddd;
   border-bottom-right-radius: 1rem;
 }
-.moovee main div div.movie-grid div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-header div.ant-collapse-expand-icon {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-header div.ant-collapse-expand-icon {
   position: absolute;
   top: 0;
   color: #ed7d31;
@@ -237,43 +240,43 @@
   align-items: center;
   justify-content: center;
 }
-.moovee main div div.movie-grid div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-header div.ant-collapse-expand-icon svg {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-header div.ant-collapse-expand-icon svg {
   font-size: 16px;
 }
-.moovee main div div.movie-grid div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-header span.ant-collapse-header-text {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-header span.ant-collapse-header-text {
   color: #ffffff;
   height: 100%;
 }
-.moovee main div div.movie-grid div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-header span.ant-collapse-header-text span {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-header span.ant-collapse-header-text span {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
 }
-.moovee main div div.movie-grid div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-header span.ant-collapse-header-text span.five {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-header span.ant-collapse-header-text span.five {
   color: hsl(51, 100%, 50%);
 }
-.moovee main div div.movie-grid div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-header span.ant-collapse-header-text span.four {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-header span.ant-collapse-header-text span.four {
   color: hsl(39, 100%, 50%);
 }
-.moovee main div div.movie-grid div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-header span.ant-collapse-header-text span.three {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-header span.ant-collapse-header-text span.three {
   color: hsl(26, 100%, 50%);
 }
-.moovee main div div.movie-grid div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-header span.ant-collapse-header-text span.two {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-header span.ant-collapse-header-text span.two {
   color: hsl(13, 100%, 50%);
 }
-.moovee main div div.movie-grid div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-header span.ant-collapse-header-text span.one {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-header span.ant-collapse-header-text span.one {
   color: hsl(0, 100%, 50%);
 }
-.moovee main div div.movie-grid div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-content {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-content {
   flex: 1;
 }
-.moovee main div div.movie-grid div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-content div.ant-collapse-content-box {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-content div.ant-collapse-content-box {
   padding: 0;
   text-align: center;
   color: white;
 }
-.moovee main div div.movie-grid div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-content div.ant-collapse-content-box .deets {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-content div.ant-collapse-content-box .deets {
   padding: 0 4px 4px 4px;
   line-height: 1.15;
   font-size: 12px;
@@ -282,30 +285,30 @@
   gap: 4px;
   font-family: "Montserrat", sans-serif;
 }
-.moovee main div div.movie-grid div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-content div.ant-collapse-content-box .deets .title {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-content div.ant-collapse-content-box .deets .title {
   margin: 16px 4px 8px 4px;
   font-size: 16px;
 }
-.moovee main div div.movie-grid div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-content div.ant-collapse-content-box .deets .year {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-content div.ant-collapse-content-box .deets .year {
   font-size: 14px;
 }
-.moovee main div div.movie-grid div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-content div.ant-collapse-content-box .deets .esrb {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-content div.ant-collapse-content-box .deets .esrb {
   font-size: 14px;
   font-weight: bold;
 }
-.moovee main div div.movie-grid div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-content div.ant-collapse-content-box .deets .plot {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-content div.ant-collapse-content-box .deets .plot {
   font-size: 16px;
 }
-.moovee main div div.movie-grid div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-content div.ant-collapse-content-box .deets .actors,
-.moovee main div div.movie-grid div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-content div.ant-collapse-content-box .deets .genre {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-content div.ant-collapse-content-box .deets .actors,
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-content div.ant-collapse-content-box .deets .genre {
   display: flex;
   flex-flow: row wrap;
   gap: 4px;
   align-items: center;
   justify-content: center;
 }
-.moovee main div div.movie-grid div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-content div.ant-collapse-content-box .deets .actors span,
-.moovee main div div.movie-grid div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-content div.ant-collapse-content-box .deets .genre span {
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-content div.ant-collapse-content-box .deets .actors span,
+.moovee main div.masonry-wrapper div.masonry div div.result-container .result div.details div.ant-collapse-item div.ant-collapse-content div.ant-collapse-content-box .deets .genre span {
   margin: 0;
   font-family: inherit;
   font-size: 14px;
