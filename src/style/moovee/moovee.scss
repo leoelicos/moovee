@@ -137,8 +137,9 @@
       justify-content: center;
     }
 
-    div {
-      div.movie-grid {
+    div.masonry-wrapper {
+      width: 100%;
+      div.masonry {
         gap: 4px !important;
         max-width: 1200px;
 
