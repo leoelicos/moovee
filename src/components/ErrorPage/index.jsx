@@ -1,8 +1,8 @@
 import { useRouteError } from 'react-router-dom'
-import './style/index.css'
 import CheerUpImage from './components/CheerUpImage.jsx'
 import Heading from './components/Heading'
 import ErrorMessage from './components/ErrorMessage.jsx'
+import './style/index.css'
 
 export default function ErrorPage() {
   const error = useRouteError()
