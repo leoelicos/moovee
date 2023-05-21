@@ -1,3 +1,6 @@
 @import './normalize.css';
 @import './moovee/moovee.css';
+@import './header/header.css';
+@import './main/main.css';
+@import './footer/footer.css';
 @import './moovee-modal/moovee-modal.css';
