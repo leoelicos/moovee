@@ -14,8 +14,12 @@ export default function useTMDB() {
       const testing = true
 
       let retrievedMovieTitles
-      if (testing) retrievedMovieTitles = mockTMDB
-      else retrievedMovieTitles = await TMDbAPIBySearch()
+      if (testing) {
+        console.log('useTMDB: mock results')
+        retrievedMovieTitles = mockTMDB
+      } else {
+        retrievedMovieTitles = await TMDbAPIBySearch()
+      }
 
       setMovieTitles(retrievedMovieTitles)
     } catch (error) {
