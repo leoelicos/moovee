@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react'
 import axios from 'axios'
+import mockSearch from '../test/mockOMDBBySearch.js'
 
 const { REACT_APP_OMDB_KEY: key } = process.env
 
@@ -11,14 +12,23 @@ export default function useOMDB() {
     console.log('searchOMDB', { str })
     setOmdbLoading(true)
     try {
+      const testing = true
+
       if (str === undefined) throw new Error('searchOMDB: No query')
       if (key === undefined) throw new Error('searchOMDB: No key')
 
-      const res = await fetch(`https://www.omdbapi.com?apikey=${key}&type=movie&page=1&s=${str}`)
+      let parsedMovies
+      if (testing) {
+        console.log('useOMDB: mock results')
+        parsedMovies = mockSearch
+      } else {
+        console.log('useOMDB: OMDB fetch by Search')
+        const res = await fetch(`https://www.omdbapi.com?apikey=${key}&type=movie&page=1&s=${str}`)
 
-      const data = await res.json()
-      const movies = data.Search.filter((v) => v.hasOwnProperty('imdbID'))
-      const parsedMovies = movies.map(parseBySearch)
+        const data = await res.json()
+        const movies = data.Search.filter((v) => v.hasOwnProperty('imdbID'))
+        parsedMovies = movies.map(parseBySearch)
+      }
       console.log({ parsedMovies })
       setOmdbMovies(parsedMovies)
     } catch (error) {
