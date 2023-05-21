@@ -1,0 +1,44 @@
+.moovee header {
+  width: 100%;
+  position: relative;
+  margin: 0 auto 8px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  gap: 4px;
+  padding: 4px;
+}
+.moovee header::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0 -6px;
+  box-shadow: 0px 0px 2vh 0px #ffaaaa;
+}
+.moovee header img {
+  margin-bottom: 0;
+  height: 32px;
+  margin-right: unset;
+}
+.moovee header p {
+  margin: 0 0 20px 0;
+  font-size: 1rem;
+  font-family: cursive;
+}
+@media (min-width: 500px) {
+  .moovee header {
+    flex-direction: row;
+  }
+  .moovee header .movie-search {
+    flex: 3;
+  }
+  .moovee header .history-select {
+    flex: 1;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 1rem;
+  }
+}/*# sourceMappingURL=header.css.map */
