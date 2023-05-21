@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import Result from './Result.jsx'
+import Result from './Result/index.jsx'
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry'
 import ResultsLoading from './ResultsLoading.jsx'
 import ResultsEmpty from './ResultsEmpty.jsx'
