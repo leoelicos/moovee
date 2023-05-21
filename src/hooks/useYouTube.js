@@ -1,16 +1,12 @@
-import { useState } from 'react'
 import axios from 'axios'
 
 const { REACT_APP_GAPI_KEY: key } = process.env
 
-export default function useYouTube() {
-  const [youTubeData, setYouTubeData] = useState(undefined)
-  const [youTubeLoading, setYouTubeLoading] = useState(false)
-  const [youTubeError, setYouTubeError] = useState(false)
-
+export default function useYouTube(dispatch) {
   const searchYouTube = async (term) => {
     try {
-      setYouTubeLoading(true)
+      console.log('searchYouTube', { term })
+      dispatch({ type: 'loadingTrue' })
       if (!term) throw new Error('useYouTube error: No query')
       if (key === undefined) throw new Error('useYouTube error: No key')
       const uri = 'https://www.googleapis.com/youtube/v3/search'
@@ -21,16 +17,17 @@ export default function useYouTube() {
       else response = await axios(uri, { ...params, q: term })
       const youtubeId = parse(response)
       if (!youtubeId) throw new Error('googleapisYouTubeV3Search')
-      setYouTubeLoading(false)
-      setYouTubeData(`https://www.youtube.com/embed/${youtubeId}`)
+      const youTubeData = `https://www.youtube.com/embed/${youtubeId}`
+      dispatch({ type: 'loadingFalse' })
+      dispatch({ type: 'foundTrailer', action: { youTubeData } })
     } catch (e) {
       console.error(e)
-      setYouTubeError(true)
-      setYouTubeLoading(false)
-      setYouTubeData(undefined)
+      dispatch({ type: 'errorTrue' })
+      dispatch({ type: 'loadingFalse' })
+      dispatch({ type: 'foundTrailer', action: { youTubeData: null } })
     }
   }
-  return { youTubeData, youTubeLoading, youTubeError, searchYouTube }
+  return { searchYouTube }
 }
 
 function mockQuery() {
