@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react'
 import axios from 'axios'
-import mockSearch from '../test/mockOMDBBySearch.js'
+import mockMovies from '../test/mockOMDBBySearch.js'
+import mockMovie from '../test/mockOMDBById.js'
 
 const { REACT_APP_OMDB_KEY: key } = process.env
 
@@ -8,57 +9,68 @@ export default function useOMDB() {
   const [omdbLoading, setOmdbLoading] = useState(null)
   const [omdbMovies, setOmdbMovies] = useState([])
 
-  const searchOMDB = useCallback(async (str) => {
-    console.log('searchOMDB', { str })
-    setOmdbLoading(true)
-    try {
-      const testing = true
+  const testing = true
+  const searchOMDB = useCallback(
+    async (str) => {
+      console.log('searchOMDB', { str })
+      setOmdbLoading(true)
+      try {
+        if (str === undefined) throw new Error('searchOMDB: No query')
+        if (key === undefined) throw new Error('searchOMDB: No key')
 
-      if (str === undefined) throw new Error('searchOMDB: No query')
-      if (key === undefined) throw new Error('searchOMDB: No key')
+        let parsedMovies
+        if (testing) {
+          console.log('useOMDB: mock search')
+          parsedMovies = mockMovies
+        } else {
+          console.log('useOMDB: fetch OMDB BySearch')
+          const res = await fetch(`https://www.omdbapi.com?apikey=${key}&type=movie&page=1&s=${str}`)
 
-      let parsedMovies
-      if (testing) {
-        console.log('useOMDB: mock results')
-        parsedMovies = mockSearch
-      } else {
-        console.log('useOMDB: OMDB fetch by Search')
-        const res = await fetch(`https://www.omdbapi.com?apikey=${key}&type=movie&page=1&s=${str}`)
-
-        const data = await res.json()
-        const movies = data.Search.filter((v) => v.hasOwnProperty('imdbID'))
-        parsedMovies = movies.map(parseBySearch)
+          const data = await res.json()
+          const movies = data.Search.filter((v) => v.hasOwnProperty('imdbID'))
+          parsedMovies = movies.map(parseBySearch)
+        }
+        console.log({ parsedMovies })
+        setOmdbMovies(parsedMovies)
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setOmdbLoading(false)
       }
-      console.log({ parsedMovies })
-      setOmdbMovies(parsedMovies)
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setOmdbLoading(false)
-    }
-  }, [])
+    },
+    [testing]
+  )
 
-  const searchOMDBById = useCallback(async (id) => {
-    console.log('searchOMDBById', { id })
-    setOmdbLoading(true)
-    try {
-      if (id === undefined) throw new Error('searchOMDBById: No id')
-      if (key === undefined) throw new Error('searchOMDBById: No key')
+  const searchOMDBById = useCallback(
+    async (id) => {
+      console.log('searchOMDBById', { id })
+      setOmdbLoading(true)
+      try {
+        if (id === undefined) throw new Error('searchOMDBById: No id')
+        if (key === undefined) throw new Error('searchOMDBById: No key')
 
-      const uri = 'https://www.omdbapi.com'
-      const params = { apikey: key, type: 'movie' }
-      const query = async (id) => await axios(uri, { params, i: id })
-      const res = await query(id)
-      const data = await res.data
-      const parsedMovie = parseById(data)
-      console.log({ parsedMovie })
-      setOmdbMovies((prev) => (prev.imdbID === id ? { ...prev, ...parsedMovie } : prev))
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setOmdbLoading(false)
-    }
-  }, [])
+        let parsedMovie
+        if (testing) {
+          console.log('useOMDB: mock results')
+          parsedMovie = mockMovie
+        } else {
+          console.log('useOMDB: fetch OMDB ByID')
+          const uri = 'https://www.omdbapi.com'
+          const params = { apikey: key, type: 'movie' }
+          const res = await axios(uri, { params, i: id })
+          const data = await res.data
+          parsedMovie = parseById(data)
+        }
+        console.log({ parsedMovie })
+        setOmdbMovies((prev) => (prev.imdbID === id ? { ...prev, ...parsedMovie } : prev))
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setOmdbLoading(false)
+      }
+    },
+    [testing]
+  )
 
   return { omdbLoading, omdbMovies, searchOMDB, searchOMDBById }
 }
