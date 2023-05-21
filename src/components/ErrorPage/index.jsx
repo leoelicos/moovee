@@ -1,6 +1,6 @@
 import { useRouteError } from 'react-router-dom'
 import CheerUpImage from './components/CheerUpImage.jsx'
-import Heading from './components/Heading'
+import Heading from './components/Heading.jsx'
 import ErrorMessage from './components/ErrorMessage.jsx'
 import './style/index.css'
 
