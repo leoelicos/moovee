@@ -10,7 +10,6 @@ import '../style/index.css'
 export default function Moovee() {
   const [searchParams] = useSearchParams()
   const [query, setQuery] = useState(searchParams.get('q') || '')
-  console.log({ query })
   useEffect(() => {
     setQuery(searchParams.get('q') || '')
   }, [searchParams])
