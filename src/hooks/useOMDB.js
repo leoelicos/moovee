@@ -30,7 +30,7 @@ export default function useOMDB() {
           const movies = data.Search.filter((v) => v.hasOwnProperty('imdbID'))
           parsedMovies = movies.map(parseBySearch)
         }
-        console.log({ parsedMovies })
+        console.log('useOMDB: parsed', parsedMovies)
         setOmdbMovies(parsedMovies)
       } catch (error) {
         console.error(error)
@@ -61,7 +61,7 @@ export default function useOMDB() {
           const data = await res.data
           parsedMovie = parseById(data)
         }
-        console.log({ parsedMovie })
+        console.log('useOMDB: parsed', parsedMovie)
         setOmdbMovies((prev) => (prev.imdbID === id ? { ...prev, ...parsedMovie } : prev))
       } catch (error) {
         console.error(error)
