@@ -1,0 +1,110 @@
+.moovee main div.results {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  align-items: flex-start;
+}
+.moovee main div.results div.result-container {
+  text-align: left;
+  width: 100%;
+  height: calc(width / 0.77);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  transition: all 0.5s linear;
+  border-radius: 1rem;
+}
+.moovee main div.results div.result-container .result {
+  width: 100%;
+  height: 100%;
+}
+.moovee main div.results div.result-container .result button.poster {
+  line-height: 0;
+  padding: 0;
+  background-color: black;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1rem;
+  position: relative;
+}
+.moovee main div.results div.result-container .result button.poster img {
+  border-radius: 1rem;
+  width: 100%;
+  max-height: calc(width / 0.77);
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+}
+.moovee main div.results div.result-container .result button.poster:hover::before {
+  content: "";
+  border-radius: 1rem;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.moovee main div.results div.result-container .result button.poster:active::before {
+  content: "";
+  border-radius: 1rem;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.moovee main div.results div.result-container .result div.details {
+  display: flex;
+  background-color: rgb(46, 46, 46);
+  flex-direction: column;
+  align-items: center;
+  gap: 1vh;
+  background-color: none;
+  width: 300px;
+  border-radius: 1rem;
+}
+.moovee main div.results div.result-container .result div.details button.trailer-btn {
+  height: 100%;
+  font-size: 16px;
+  line-height: unset;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  border-radius: 0;
+  padding: 4px 8px 4px 16px;
+}
+.moovee main div.results div.result-container.empty {
+  background: none;
+  border-radius: 0;
+}
+.moovee main div.results div.result-container.empty h5 {
+  color: white;
+  font-size: 1.2rem;
+}
+.moovee main div.results div.result-container.empty h5 svg {
+  color: pink;
+  display: inline-block;
+  margin-bottom: 1px;
+  font-size: 0.8rem;
+}
+@media (min-width: 340px) {
+  .moovee main div.results div.result-container {
+    width: 50%;
+  }
+}
+@media (min-width: 520px) {
+  .moovee main div.results div.result-container {
+    width: 33.3333333333%;
+  }
+}
+@media (min-width: 700px) {
+  .moovee main div.results div.result-container {
+    width: 25%;
+  }
+}/*# sourceMappingURL=results.css.map */
