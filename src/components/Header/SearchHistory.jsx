@@ -5,18 +5,18 @@ import { useMemo } from 'react'
 
 export default function SearchHistory({ handleSubmit }) {
   /* mock */
-  const history = [
-    'Titanic',
-    'Babe',
-    'Wanted' //
-  ]
+
   const historyOptions = useMemo(
     () =>
-      history?.map((title) => ({
+      [
+        'Titanic',
+        'Babe',
+        'Wanted' //
+      ].map((title) => ({
         label: title,
         value: title
       })) || [],
-    [history]
+    []
   )
 
   return (
@@ -26,7 +26,7 @@ export default function SearchHistory({ handleSubmit }) {
       dropdownMatchSelectWidth={false}
       bordered={false}
       suffixIcon={<FontAwesomeIcon icon={faCaretSquareDown} />}
-      placeholder='History'
+      placeholder='Search it again'
       options={historyOptions}
       onChange={handleSubmit}
     />
