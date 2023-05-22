@@ -26,8 +26,8 @@ export default function Moovee() {
         <Header initialQuery={query.current} />
         <main>
           <Outlet />
+          <Footer />
         </main>
-        <Footer />
         <Modal>
           <Trailer uri={youTubeData} />
         </Modal>
