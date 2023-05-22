@@ -1,7 +1,10 @@
 .moovee {
   header {
     width: 100%;
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: black;
     margin: 0 auto 8px 0;
     display: flex;
     flex-direction: column;
@@ -23,7 +26,7 @@
 
     img {
       margin-bottom: 0;
-      height: 32px;
+      height: 64px;
       margin-right: unset;
     }
 
@@ -33,17 +36,24 @@
       font-family: cursive;
     }
 
+    .movie-search {
+      width: 100%;
+    }
+    .history-select {
+      width: 100%;
+
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 1rem;
+    }
+
     @media (min-width: 500px) {
       flex-direction: row;
 
       .movie-search {
         flex: 3;
       }
-
       .history-select {
         flex: 1;
-        background-color: rgba(255, 255, 255, 0.8);
-        border-radius: 1rem;
       }
     }
   }
