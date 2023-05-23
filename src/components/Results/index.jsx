@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
 import Result from './Result/index.jsx'
-import ResultsLoading from './ResultsLoading.jsx'
+import ResultsLoadingSpinner from './ResultsLoadingSpinner.jsx'
 import ResultsEmpty from './ResultsEmpty.jsx'
 import { useSearchParams } from 'react-router-dom'
 import useOMDB from '../../hooks/useOMDB.js'
@@ -17,7 +17,7 @@ export default function Results() {
     searchOMDB(query)
   }, [searchOMDB, query])
 
-  if (omdbLoading) return <ResultsLoading />
+  if (omdbLoading) return <ResultsLoadingSpinner />
   if (!omdbMovies) return <h1>OMDB Error</h1>
   if (!omdbMovies.length) return <ResultsEmpty />
 
