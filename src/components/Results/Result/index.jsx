@@ -1,29 +1,35 @@
 import { useContext, useState } from 'react'
-import { Tag, Button, Empty } from 'antd'
+import useOMDBById from '../../../hooks/useOMDBById'
 import useYouTube from '../../../hooks/useYouTube'
+
+import { Tag, Button, Empty } from 'antd'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faFilm } from '@fortawesome/free-solid-svg-icons'
 import NoPosterLogo from '../../../images/noposter.png'
 import { MovieContext, MovieDispatchContext } from '../../../context'
 import Stars from './Stars'
-
 export default function Result({ poster, title, esrb, year, genre, actors, plot, imdbRating }) {
-  const [active, setActive] = useState(false)
+  const {
+    loading: loadingById,
+    data: dataById,
+    search: searchById //
+  } = useOMDBById()
+
+  const [isPoster, setIsPoster] = useState(true)
   const dispatch = useContext(MovieDispatchContext)
   const { searchYouTube } = useYouTube(dispatch)
 
   const { youTubeLoading, youTubeError } = useContext(MovieContext)
 
-  const handleClickPoster = async () => {
-    console.log('handleClickPoster')
-    setActive((prev) => !prev)
+  const togglePoster = () => {
+    setIsPoster((prev) => !prev)
   }
 
   const handleClickTrailer = async () => {
     try {
       console.log('handleClickTrailer')
-      const query = [title || '', year || '', 'trailer'].join('+').replace(/\s/g, '%20')
+      const query = encodeURIComponent([title || '', year || '', 'trailer'].join('+'))
       console.log({ query })
       await searchYouTube(query)
       dispatch({ type: 'modalOpen' })
@@ -36,12 +42,12 @@ export default function Result({ poster, title, esrb, year, genre, actors, plot,
   return (
     <div className='result-container'>
       <div className='result'>
-        {active ? (
+        {isPoster ? (
           <Button
             className='poster'
             block
             type='primary'
-            onClick={handleClickPoster}>
+            onClick={togglePoster}>
             {poster ? (
               <img
                 src={poster}
@@ -61,7 +67,7 @@ export default function Result({ poster, title, esrb, year, genre, actors, plot,
               className='back'
               block
               type='dashed'
-              onClick={handleClickPoster}>
+              onClick={togglePoster}>
               <FontAwesomeIcon icon={faArrowLeft} />
             </Button>
             <h3 className='title'>{title || 'Untitled'}</h3>
