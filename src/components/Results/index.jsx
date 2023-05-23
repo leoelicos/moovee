@@ -4,26 +4,30 @@ import Result from './Result/index.jsx'
 import ResultsLoadingSpinner from './ResultsLoadingSpinner.jsx'
 import ResultsEmpty from './ResultsEmpty.jsx'
 import { useSearchParams } from 'react-router-dom'
-import useOMDB from '../../hooks/useOMDB.js'
+import useOMDBBySearch from '../../hooks/useOMDBBySearch.js'
 
 export default function Results() {
-  const { omdbLoading, omdbMovies, searchOMDB } = useOMDB()
+  const {
+    loading: loadingBySearch,
+    data: dataBySearch,
+    search: searchBySearch //
+  } = useOMDBBySearch()
 
   const [searchParams] = useSearchParams()
   const query = searchParams.get('q')
 
   useEffect(() => {
     if (!query) return
-    searchOMDB(query)
-  }, [searchOMDB, query])
+    searchBySearch(query)
+  }, [searchBySearch, query])
 
-  if (omdbLoading) return <ResultsLoadingSpinner />
-  if (!omdbMovies) return <h1>OMDB Error</h1>
-  if (!omdbMovies.length) return <ResultsEmpty />
+  if (loadingBySearch) return <ResultsLoadingSpinner />
+  if (!dataBySearch) return <h1>OMDB Error</h1>
+  if (!dataBySearch.length) return <ResultsEmpty />
 
   return (
     <div className='results'>
-      {omdbMovies.map((movie, i) => (
+      {dataBySearch.map((movie, i) => (
         <Result
           key={i}
           idx={i}
