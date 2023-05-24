@@ -1,5 +1,5 @@
 @import './suggestions/suggestions.css';
-@import './results/results.css';
+
 .moovee main {
   flex: 1 0;
   display: flex;
@@ -14,4 +14,4 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}/*# sourceMappingURL=main.css.map */
+} /*# sourceMappingURL=main.css.map */
