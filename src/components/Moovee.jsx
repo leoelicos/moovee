@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useContext, useCallback } from 'react'
 import { useSearchParams, Outlet } from 'react-router-dom'
 
 import Header from './Header/index.jsx'
@@ -9,21 +9,29 @@ import '../style/index.css'
 import Trailer from './Modal/Trailer.jsx'
 
 import { MovieContext } from '../context/index.jsx'
+import { MovieDispatchContext } from '../context/index.jsx'
 
 export default function Moovee() {
   const [searchParams] = useSearchParams()
-  const [query, setQuery] = useState(searchParams.get('q') || '')
+  const dispatch = useContext(MovieDispatchContext)
 
   const { youTubeData } = useContext(MovieContext)
 
+  const x = useCallback(() => {
+    const q = searchParams.get('q') || ''
+    const query = decodeURIComponent(q)
+
+    dispatch({ type: 'setQuery', action: { query } })
+  }, [searchParams, dispatch])
+
   useEffect(() => {
-    setQuery(searchParams.get('q') || '')
-  }, [searchParams])
+    x()
+  }, [])
 
   return (
     <div className='moovee'>
       <Theme>
-        <Header initialQuery={query.current} />
+        <Header />
         <main>
           <Outlet />
           <Footer />
