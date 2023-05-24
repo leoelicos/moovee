@@ -19,12 +19,12 @@ export default function useYouTube(dispatch) {
       if (!youtubeId) throw new Error('googleapisYouTubeV3Search')
       const youTubeData = `https://www.youtube.com/embed/${youtubeId}`
       dispatch({ type: 'loadingFalse' })
-      dispatch({ type: 'foundTrailer', action: { youTubeData } })
+      dispatch({ type: 'setTrailer', action: { youTubeData } })
     } catch (e) {
       console.error(e)
       dispatch({ type: 'errorTrue' })
       dispatch({ type: 'loadingFalse' })
-      dispatch({ type: 'foundTrailer', action: { youTubeData: null } })
+      dispatch({ type: 'setTrailer', action: { youTubeData: null } })
     }
   }
   return { searchYouTube }
