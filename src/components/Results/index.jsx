@@ -2,10 +2,10 @@ import { useEffect } from 'react'
 
 import Result from './Result/index.jsx'
 import ResultsLoadingSpinner from './ResultsLoadingSpinner.jsx'
-import ResultsEmpty from './ResultsEmpty.jsx'
+import NoMovies from './NoMovies.jsx'
 import { useSearchParams } from 'react-router-dom'
 import useOMDBBySearch from '../../hooks/useOMDBBySearch.js'
-
+import './style/results.css'
 export default function Results() {
   const {
     loading: loadingBySearch,
@@ -23,8 +23,7 @@ export default function Results() {
 
   if (loadingBySearch) return <ResultsLoadingSpinner />
   if (!dataBySearch) return <h1>OMDB Error</h1>
-  if (!dataBySearch.length) return <ResultsEmpty />
-
+  if (!dataBySearch.length) return <NoMovies />
   return (
     <div className='results'>
       {dataBySearch.map((movie, i) => (
