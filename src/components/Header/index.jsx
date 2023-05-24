@@ -1,35 +1,26 @@
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useContext, useEffect } from 'react'
+
 import SearchBar from './SearchBar.jsx'
 import SearchHistory from './SearchHistory.jsx'
 import MooveeLogo from './MooveeLogo.jsx'
-import cleanQuery from '../../utils/cleanQuery.js'
+import { MovieContext, MovieDispatchContext } from '../../context/index.jsx'
 
-export default function Header({ initialQuery }) {
-  const [searchText, setSearchText] = useState('')
-
-  const navigate = useNavigate()
-
-  function handleSubmit(str) {
-    str = cleanQuery(str)
-    if (str.length > 0) navigate(`/results?q=${str}`)
-  }
+import './style/header.css'
+export default function Header() {
+  const { query } = useContext(MovieContext)
+  const dispatch = useContext(MovieDispatchContext)
 
   useEffect(() => {
-    setSearchText(initialQuery)
-  }, [initialQuery])
+    const text = decodeURIComponent(query)
+    dispatch({ type: 'setSearchText', action: { text } })
+  }, [query])
 
   return (
     <header>
       <MooveeLogo />
-      <SearchBar
-        // loading={omdbLoading}
-        handleSubmit={handleSubmit}
-        searchText={searchText}
-        setSearchText={setSearchText}
-      />
+      <SearchBar />
 
-      <SearchHistory handleSubmit={handleSubmit} />
+      <SearchHistory />
     </header>
   )
 }
