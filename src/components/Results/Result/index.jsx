@@ -9,6 +9,10 @@ import { faArrowLeft, faFilm } from '@fortawesome/free-solid-svg-icons'
 import NoPosterLogo from '../../../images/noposter.png'
 import { MovieContext, MovieDispatchContext } from '../../../context'
 import Stars from './Stars'
+
+import './style/result-container.css'
+import './style/result.css'
+
 export default function Result({ poster, title, esrb, year, genre, actors, plot, imdbRating }) {
   const {
     loading: loadingById,
