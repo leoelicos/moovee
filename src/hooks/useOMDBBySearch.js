@@ -22,8 +22,10 @@ export default function useOMDBBySearch() {
           console.log('useOMDB: mock search')
           parsedMovies = mockMovies
         } else {
-          console.log('useOMDB: fetch OMDB BySearch')
-          const res = await axios(`https://www.omdbapi.com?apikey=${key}&type=movie&page=1&s=${str}`)
+          console.log('useOMDB: axios OMDBBySearch')
+          const uri = 'https://www.omdbapi.com'
+          const params = { apikey: key, type: 'movie', page: 1, s: str }
+          const res = await axios(uri, { params })
           console.log('axios result', { res })
           const movies = res.Search.filter((v) => v.hasOwnProperty('imdbID'))
           parsedMovies = movies.map(parse)
