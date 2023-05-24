@@ -22,7 +22,7 @@ export default function useOMDBById() {
           console.log('useOMDB: mock results')
           parsedMovie = mockMovie
         } else {
-          console.log('useOMDB: fetch OMDB ByID')
+          console.log('useOMDB: axios OMDBByID')
           const uri = 'https://www.omdbapi.com'
           const params = { apikey: key, type: 'movie', i: id }
           const res = await axios(uri, { params })
