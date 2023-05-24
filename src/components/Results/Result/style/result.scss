@@ -1,22 +1,7 @@
 .moovee {
   main {
     div.results {
-      display: flex;
-      flex-flow: row wrap;
-      width: 100%;
-      align-items: flex-start;
-
       div.result-container {
-        text-align: left;
-        width: 100%;
-        height: calc(width / 0.77);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        transition: all 0.5s linear;
-        border-radius: 1rem;
-
         .result {
           width: 100%;
           height: 100%;
@@ -24,7 +9,7 @@
           button.poster {
             line-height: 0;
             padding: 0;
-            background-color: black;
+            background-color: green;
             height: 100%;
 
             display: flex;
@@ -35,7 +20,7 @@
             img {
               border-radius: 1rem;
               width: 100%;
-              max-height: calc(width / 0.77);
+
               object-fit: cover;
               object-position: center;
             }
@@ -70,7 +55,7 @@
 
             background-color: none;
 
-            width: 300px;
+            width: 100%;
             border-radius: 1rem;
 
             button.trailer-btn {
@@ -84,41 +69,6 @@
               padding: 4px 8px 4px 16px;
             }
           }
-        }
-
-        &.empty {
-          background: none;
-          border-radius: 0;
-
-          h5 {
-            color: white;
-            font-size: 1.2rem;
-
-            svg {
-              color: pink;
-              display: inline-block;
-              margin-bottom: 1px;
-              font-size: 0.8rem;
-            }
-          }
-        }
-      }
-
-      @media (min-width: 340px) {
-        div.result-container {
-          width: calc(100% / 2);
-        }
-      }
-
-      @media (min-width: 520px) {
-        div.result-container {
-          width: calc(100% / 3);
-        }
-      }
-
-      @media (min-width: 700px) {
-        div.result-container {
-          width: calc(100% / 4);
         }
       }
     }
