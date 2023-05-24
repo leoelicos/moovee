@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer } from 'react'
+import { createContext, useReducer } from 'react'
 
 export const MovieContext = createContext(null)
 export const MovieDispatchContext = createContext(null)
@@ -8,20 +8,11 @@ export default function MovieProvider({ children }) {
     youTubeData: '',
     youTubeLoading: false,
     youTubeError: false,
-    modalOpen: false
+    modalOpen: false,
+    query: '',
+    searchText: ''
   }
   const [state, dispatch] = useReducer(MovieReducer, initialState)
-
-  useEffect(() => {
-    const initialiseMovieContext = async () => {
-      try {
-        console.log('InitializeContext')
-      } catch (e) {
-        console.error(e)
-      }
-    }
-    initialiseMovieContext()
-  }, [])
 
   return (
     <MovieContext.Provider value={state}>
@@ -31,9 +22,17 @@ export default function MovieProvider({ children }) {
 }
 
 /* return updated state to useReducer */
-async function MovieReducer(state, { type, action }) {
+function MovieReducer(state, { type, action }) {
   console.log('MovieReducer', { type, action })
   switch (type) {
+    case 'setSearchText': {
+      return { ...state, searchText: action.text }
+    }
+
+    case 'setQuery': {
+      return { ...state, query: action.query }
+    }
+
     case 'loadingTrue': {
       return { ...state, youTubeLoading: true }
     }
@@ -50,7 +49,7 @@ async function MovieReducer(state, { type, action }) {
       return { ...state, youTubeError: false }
     }
 
-    case 'foundTrailer': {
+    case 'setTrailer': {
       const { youTubeData } = action
       return youTubeData ? { ...state, youTubeData } : state
     }
