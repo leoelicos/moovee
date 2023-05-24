@@ -2,7 +2,7 @@ import { faFaceMehBlank } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Title from 'antd/es/typography/Title'
 
-export default function ResultsEmpty() {
+export default function NoMovies() {
   const o = <FontAwesomeIcon icon={faFaceMehBlank} />
 
   return (
