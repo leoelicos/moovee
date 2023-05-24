@@ -1,0 +1,42 @@
+.moovee main div.results div.result-container {
+  text-align: left;
+  width: 100%;
+  height: max(30%, 350px);
+  border: 1px solid red;
+  background-color: yellow;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  transition: all 0.5s linear;
+  border-radius: 1rem;
+}
+@media (min-width: 340px) {
+  .moovee main div.results div.result-container {
+    width: 50%;
+  }
+}
+@media (min-width: 520px) {
+  .moovee main div.results div.result-container {
+    width: 33.3333333333%;
+  }
+}
+@media (min-width: 700px) {
+  .moovee main div.results div.result-container {
+    width: 25%;
+  }
+}
+.moovee main div.results div.result-container.empty {
+  background: none;
+  border-radius: 0;
+}
+.moovee main div.results div.result-container.empty h5 {
+  color: white;
+  font-size: 1.2rem;
+}
+.moovee main div.results div.result-container.empty h5 svg {
+  color: pink;
+  display: inline-block;
+  margin-bottom: 1px;
+  font-size: 0.8rem;
+}/*# sourceMappingURL=result-container.css.map */
