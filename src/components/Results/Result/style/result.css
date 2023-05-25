@@ -16,6 +16,7 @@
 .moovee main div.results div.result-container .result button.poster img {
   border-radius: 1rem;
   width: 100%;
+  height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
   -o-object-position: center;
