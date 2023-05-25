@@ -19,8 +19,15 @@ export default function useOMDBBySearch() {
 
         let parsedMovies
         if (testing) {
-          console.log('useOMDB: mock search')
-          parsedMovies = mockMovies
+          const testingPromise = () =>
+            new Promise((res) => {
+              console.log('useOMDBBySearch mock loading')
+              setTimeout(() => {
+                console.log('useOMDBBySearch loading finished')
+                res(mockMovies)
+              }, 2000)
+            })
+          parsedMovies = await testingPromise()
         } else {
           console.log('useOMDB: axios OMDBBySearch')
           const uri = 'https://www.omdbapi.com'
