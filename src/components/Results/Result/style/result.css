@@ -43,21 +43,21 @@
   background-color: rgba(0, 0, 0, 0.2);
 }
 .moovee main div.results div.result-container .result div.details {
+  width: 100%;
+  height: 100%;
   display: flex;
   background-color: rgb(46, 46, 46);
   flex-direction: column;
   align-items: center;
   gap: 1vh;
   background-color: none;
-  width: 100%;
   border-radius: 1rem;
 }
 .moovee main div.results div.result-container .result div.details button.trailer-btn {
-  height: 100%;
   font-size: 16px;
   line-height: unset;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   border-radius: 0;
   padding: 4px 8px 4px 16px;
