@@ -58,11 +58,15 @@ export default function Result({ poster, title, esrb, year, genre, actors, plot,
                 alt='movie poster'
               />
             ) : (
-              // <div className='noposter'>No poster</div>
-              <Empty
-                image={NoPosterLogo}
-                description='hello'
-              />
+              <div className='noposter'>
+                <div className='noposter-logo-wrapper'>
+                  <img
+                    className='noposter-logo'
+                    src={NoPosterLogo}
+                  />
+                </div>
+                <div className='noposter-text'>No Poster</div>
+              </div>
             )}
           </Button>
         ) : (
