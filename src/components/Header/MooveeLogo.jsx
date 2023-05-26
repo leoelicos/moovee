@@ -1,4 +1,4 @@
-import Logo from '../../images/mooveeCow.png'
+import Logo from '../../images/noposter.png'
 
 export default function MooveeLogo() {
   return (
