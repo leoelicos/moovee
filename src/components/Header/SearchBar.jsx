@@ -12,24 +12,37 @@ export default function SearchBar() {
 
   const { searchText } = useContext(MovieContext)
 
-  function handleSubmit(query) {
-    const text = cleanQuery(query)
-    const encoded = encodeURIComponent(text)
-    const nextPage = `/results?q=${encoded}`
-    if (encoded.length > 0) navigate(nextPage)
+  function updateSearchText(text) {
     dispatch({ type: 'setSearchText', action: { text } })
+  }
+
+  function next(query) {
+    navigate(`/results?q=${query}`)
+  }
+
+  function encode(query) {
+    return encodeURIComponent(query)
+  }
+
+  function handleSubmit(query) {
+    query = cleanQuery(query)
+    if (query.length > 0) {
+      const encoded = encode(query)
+      next(encoded)
+      updateSearchText(encoded)
+    }
   }
 
   function handleChange(event) {
     const text = event.target.value
-    dispatch({ type: 'setSearchText', action: { text } })
+    if (text.length > 0) updateSearchText(text)
   }
 
   return (
     <Search
       value={searchText}
       // loading={omdbLoading}
-      allowClear={true}
+
       className='movie-search'
       placeholder={'Search for a movie'}
       enterButton={<FontAwesomeIcon icon={faSearch} />}
