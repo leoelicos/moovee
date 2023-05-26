@@ -5,8 +5,8 @@
 .moovee main div.results div.result-container .result button.poster {
   line-height: 0;
   padding: 0;
-  background-color: green;
-  height: 100%;
+  background-color: black;
+  height: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,6 +21,9 @@
      object-fit: cover;
   -o-object-position: center;
      object-position: center;
+}
+.moovee main div.results div.result-container .result button.poster img:hover {
+  border-radius: 0;
 }
 .moovee main div.results div.result-container .result button.poster:hover::before {
   content: "";
@@ -61,4 +64,9 @@
   justify-content: center;
   border-radius: 0;
   padding: 4px 8px 4px 16px;
+}
+.moovee main div.results div.result-container .result div.result-title {
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 14px;
 }/*# sourceMappingURL=result.css.map */
