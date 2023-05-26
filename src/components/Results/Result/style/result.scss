@@ -9,8 +9,8 @@
           button.poster {
             line-height: 0;
             padding: 0;
-            background-color: green;
-            height: 100%;
+            background-color: black;
+            height: 250px;
 
             display: flex;
             justify-content: center;
@@ -24,6 +24,10 @@
               height: 100%;
               object-fit: cover;
               object-position: center;
+
+              &:hover {
+                border-radius: 0;
+              }
             }
             &:hover::before {
               content: '';
@@ -70,6 +74,12 @@
               border-radius: 0;
               padding: 4px 8px 4px 16px;
             }
+          }
+
+          div.result-title {
+            color: white;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 14px;
           }
         }
       }
