@@ -5,8 +5,7 @@
         text-align: left;
         width: 100%;
         height: 350px;
-        border: 1px solid red;
-        background-color: yellow;
+
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -14,21 +13,32 @@
         transition: all 0.5s linear;
         border-radius: 1rem;
 
+        margin: 4px;
+
         @media (min-width: 340px) {
-          width: calc(100% / 2);
+          width: calc((100% - 8px * 2) / 2);
         }
 
         @media (min-width: 520px) {
-          width: calc(100% / 3);
+          width: calc((100% - 8px * 3) / 3);
         }
 
         @media (min-width: 700px) {
-          width: calc(100% / 4);
+          width: calc((100% - 8px * 4) / 4);
+        }
+
+        @media (min-width: 880px) {
+          width: calc((100% - 8px * 5) / 5);
+        }
+
+        @media (min-width: 1000px) {
+          width: calc((100% - 8px * 6) / 6);
         }
 
         &.empty {
           background: none;
           border-radius: 0;
+          border: 1px solid red;
 
           h5 {
             color: white;
