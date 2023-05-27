@@ -1,0 +1,23 @@
+.moovee {
+  main {
+    div.results {
+      div.result-container {
+        .result {
+          div.details {
+            button.trailer-btn {
+              font-size: 16px;
+              line-height: unset;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              border-radius: 1rem 1rem 0 0;
+              height: 2rem;
+              padding: 1rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
