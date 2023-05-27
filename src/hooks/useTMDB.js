@@ -11,7 +11,7 @@ export default function useTMDB() {
   const search = useCallback(async () => {
     setLoading(true)
     try {
-      const testing = true
+      const testing = false
 
       let retrievedMovieTitles
       if (testing) {

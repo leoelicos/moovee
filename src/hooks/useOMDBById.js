@@ -9,7 +9,7 @@ export default function useOMDBById() {
   const [error, setError] = useState(null)
   const [data, setData] = useState([])
 
-  const testing = true
+  const testing = false
   const search = useCallback(
     async (id) => {
       console.log('searchOMDBById', { id })
