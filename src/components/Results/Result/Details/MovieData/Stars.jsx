@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 
 export default function Stars({ stars }) {
-  const Star = <FontAwesomeIcon icon={faStar} />
   if (!stars) return null
   return (
     <div className='stars'>
@@ -14,3 +13,5 @@ export default function Stars({ stars }) {
     </div>
   )
 }
+
+const Star = () => <FontAwesomeIcon icon={faStar} />
