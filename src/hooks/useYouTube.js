@@ -32,13 +32,17 @@ export default function useYouTube() {
       if (!response) {
         throw new Error('useYouTube error: googleapis')
       }
-      setData(`https://www.youtube.com/embed/${parse(response)}`)
+      const payload = `https://www.youtube.com/embed/${parse(response)}`
+      // console.log({ payload })
+      setLoading(false)
+      setData(payload)
+      return payload
     } catch (e) {
       console.error(e)
+      setLoading(false)
       setError(true)
       setData(null)
-    } finally {
-      setLoading(false)
+      return ''
     }
   }
   return { loading, error, data, searchYouTube }
