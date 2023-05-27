@@ -4,9 +4,8 @@ import { useSearchParams, Outlet } from 'react-router-dom'
 import Header from './Header/index.jsx'
 import Footer from './Footer/index.jsx'
 import Theme from './Theme.jsx'
-import Modal from './Modal/index.jsx'
+import MovieModal from './MovieModal/index.jsx'
 import '../style/index.css'
-import Trailer from './Modal/Trailer.jsx'
 
 import { MovieContext } from '../context/index.jsx'
 import { MovieDispatchContext } from '../context/index.jsx'
@@ -14,10 +13,9 @@ import { MovieDispatchContext } from '../context/index.jsx'
 export default function Moovee() {
   const [searchParams] = useSearchParams()
   const dispatch = useContext(MovieDispatchContext)
+  const { gapiData, isModalOpen } = useContext(MovieContext)
 
-  const { youTubeData } = useContext(MovieContext)
-
-  const x = useCallback(() => {
+  const loadQuery = useCallback(() => {
     const q = searchParams.get('q') || ''
     const query = decodeURIComponent(q)
 
@@ -25,8 +23,8 @@ export default function Moovee() {
   }, [searchParams, dispatch])
 
   useEffect(() => {
-    x()
-  }, [])
+    loadQuery()
+  }, [loadQuery])
 
   return (
     <div className='moovee'>
@@ -36,9 +34,7 @@ export default function Moovee() {
           <Outlet />
           <Footer />
         </main>
-        <Modal>
-          <Trailer uri={youTubeData} />
-        </Modal>
+        {isModalOpen ? <MovieModal uri={gapiData} /> : null}
       </Theme>
     </div>
   )
