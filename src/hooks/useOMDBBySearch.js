@@ -9,7 +9,7 @@ export default function useOMDBBySearch() {
   const [error, setError] = useState(false)
   const [data, setData] = useState([])
 
-  const testing = true
+  const testing = false
   const search = useCallback(
     async (str) => {
       console.log('searchOMDBById', { str })
@@ -33,11 +33,15 @@ export default function useOMDBBySearch() {
         } else {
           console.log('useOMDB: axios OMDBBySearch')
           const uri = 'https://www.omdbapi.com'
-          const params = { apikey: key, type: 'movie', page: 1, s: str }
+          const params = { apikey: key, type: 'movie', page: 1, s: encodeURIComponent(str) }
           const res = await axios(uri, { params })
           console.log('axios result', { res })
-          const movies = res.Search.filter((v) => v.hasOwnProperty('imdbID'))
-          parsedMovies = movies.map(parse)
+          if (res.data.Response === 'False') {
+            parsedMovies = []
+          } else {
+            const movies = res.data.Search.filter((v) => v.hasOwnProperty('imdbID'))
+            parsedMovies = movies.map(parse)
+          }
         }
         console.log('useOMDB: parsed', parsedMovies)
         setData(parsedMovies)
