@@ -57,9 +57,12 @@ function MovieReducer(state, { type, action }) {
       return { ...state, gapiError: false }
     }
 
-    case 'gapiDataString': {
-      const { gapiData } = action
-      return gapiData ? { ...state, gapiData } : state
+    case 'gapiData': {
+      const { data } = action
+      if (!data) return state
+      const newState = { ...state, gapiData: data }
+      console.log({ newState })
+      return newState
     }
 
     case 'modalOpen': {
