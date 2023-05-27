@@ -1,11 +1,14 @@
-import { Tag } from 'antd'
+import { Spin, Tag } from 'antd'
 import Stars from './Stars.jsx'
-export default function MovieData({ data }) {
+export default function MovieData({ data, loading, error }) {
   console.log({ data })
 
   const { esrb, plot, actors, genre, imdbRating } = data
+
+  if (loading) return <Spin />
+  else if (error) return null
   return (
-    <>
+    <div className='movie-data'>
       <Stars stars={imdbRating} />
 
       {esrb && <div className='esrb'>{esrb}</div>}
@@ -36,6 +39,6 @@ export default function MovieData({ data }) {
           ))}
         </div>
       )}
-    </>
+    </div>
   )
 }
