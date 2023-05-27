@@ -13,7 +13,9 @@ import { MovieDispatchContext } from '../context/index.jsx'
 export default function Moovee() {
   const [searchParams] = useSearchParams()
   const dispatch = useContext(MovieDispatchContext)
-  const { gapiData, isModalOpen } = useContext(MovieContext)
+  const { gapiData, modalOpen } = useContext(MovieContext)
+
+  // console.log('Moovee', { gapiData, modalOpen })
 
   const loadQuery = useCallback(() => {
     const q = searchParams.get('q') || ''
@@ -34,7 +36,12 @@ export default function Moovee() {
           <Outlet />
           <Footer />
         </main>
-        {isModalOpen ? <MovieModal uri={gapiData} /> : null}
+        {modalOpen ? (
+          <MovieModal
+            uri={gapiData}
+            modalOpen={modalOpen}
+          />
+        ) : null}
       </Theme>
     </div>
   )
