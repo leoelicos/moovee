@@ -18,16 +18,13 @@ export default function TrailerButton({ title, year }) {
 
   const handleClickTrailer = async () => {
     try {
-      dispatch({ type: 'gapiErrorFalse' })
-      dispatch({ type: 'gapiLoadingTrue' })
       const query = getTrailerString(title, year)
-      await searchYouTube(query)
-      dispatch({ type: 'gapiDataString', action: { gapiData: data } })
+      const tempData = await searchYouTube(query)
+      console.log('new data', { tempData })
+      dispatch({ type: 'gapiData', action: { data: tempData } })
       dispatch({ type: 'modalOpen' })
     } catch (error) {
-      dispatch({ type: 'gapiErrorTrue' })
-    } finally {
-      dispatch({ type: 'gapiLoadingFalse' })
+      console.error(error)
     }
   }
   return (
