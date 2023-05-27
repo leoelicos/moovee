@@ -18,18 +18,22 @@ export default function Results() {
   }, [search, query])
 
   if (loading) return <ResultsLoadingSpinner />
-  if (!data || data.length === 0) return <NoMovies />
+
   return (
     <>
-      {error && <h1>OMDB Error</h1>}
+      {error && <h1 className='error'>OMDB Error</h1>}
       <div className='results'>
-        {data.map((movie, i) => (
-          <Result
-            key={i}
-            idx={i}
-            {...movie}
-          />
-        ))}
+        {!data || data.length === 0 ? (
+          <NoMovies />
+        ) : (
+          data.map((movie, i) => (
+            <Result
+              key={i}
+              idx={i}
+              {...movie}
+            />
+          ))
+        )}
       </div>
     </>
   )
