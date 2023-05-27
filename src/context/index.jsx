@@ -1,22 +1,30 @@
-import { createContext, useReducer } from 'react'
+import { createContext, useMemo, useReducer } from 'react'
 
 export const MovieContext = createContext(null)
 export const MovieDispatchContext = createContext(null)
 
 export default function MovieProvider({ children }) {
   const initialState = {
-    youTubeData: '',
-    youTubeLoading: false,
-    youTubeError: false,
+    gapiData: '',
+    gapiLoading: false,
+    gapiError: false,
     modalOpen: false,
     query: '',
     searchText: ''
   }
   const [state, dispatch] = useReducer(MovieReducer, initialState)
 
+  const memoState = useMemo(() => {
+    return state
+  }, [state])
+
+  const memoDispatch = useMemo(() => {
+    return dispatch
+  }, [dispatch])
+
   return (
-    <MovieContext.Provider value={state}>
-      <MovieDispatchContext.Provider value={dispatch}>{children}</MovieDispatchContext.Provider>
+    <MovieContext.Provider value={memoState}>
+      <MovieDispatchContext.Provider value={memoDispatch}>{children}</MovieDispatchContext.Provider>
     </MovieContext.Provider>
   )
 }
@@ -33,25 +41,25 @@ function MovieReducer(state, { type, action }) {
       return { ...state, query: action.query }
     }
 
-    case 'loadingTrue': {
-      return { ...state, youTubeLoading: true }
+    case 'gapiLoadingTrue': {
+      return { ...state, gapiLoading: true }
     }
 
-    case 'loadingFalse': {
-      return { ...state, youTubeLoading: false }
+    case 'gapiLoadingFalse': {
+      return { ...state, gapiLoading: false }
     }
 
-    case 'errorTrue': {
-      return { ...state, youTubeError: true }
+    case 'gapiErrorTrue': {
+      return { ...state, gapiError: true }
     }
 
-    case 'errorFalse': {
-      return { ...state, youTubeError: false }
+    case 'gapiErrorFalse': {
+      return { ...state, gapiError: false }
     }
 
-    case 'setTrailer': {
-      const { youTubeData } = action
-      return youTubeData ? { ...state, youTubeData } : state
+    case 'gapiDataString': {
+      const { gapiData } = action
+      return gapiData ? { ...state, gapiData } : state
     }
 
     case 'modalOpen': {
