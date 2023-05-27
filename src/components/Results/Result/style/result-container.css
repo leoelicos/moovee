@@ -1,3 +1,6 @@
+.moovee main h1.error {
+  color: white;
+}
 .moovee main div.results div.result-container {
   text-align: left;
   width: 100%;
@@ -7,7 +10,7 @@
   justify-content: flex-start;
   transition: all 0.5s linear;
   border-radius: 1rem;
-  margin: 4px;
+  margin: 4px auto;
 }
 @media (min-width: 340px) {
   .moovee main div.results div.result-container {
@@ -34,11 +37,11 @@
     width: calc((100% - 48px) / 6);
   }
 }
-.moovee main div.results div.result-container.empty h5 {
+.moovee main div.results div.result-container.empty .no-movies {
   color: white;
   font-size: 1.2rem;
 }
-.moovee main div.results div.result-container.empty h5 svg {
+.moovee main div.results div.result-container.empty .no-movies svg {
   color: pink;
   display: inline-block;
   margin-bottom: 1px;

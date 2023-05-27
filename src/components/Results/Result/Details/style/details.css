@@ -37,6 +37,7 @@
 }
 .moovee main div.results div.result-container .result div.details div.movie-data .stars {
   margin: 8px 0 0 0;
+  color: yellow;
 }
 .moovee main div.results div.result-container .result div.details div.movie-data .esrb {
   font-weight: 700;
