@@ -1,13 +1,9 @@
 import { Spin } from 'antd'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 export default function Trailer({ uri }) {
   const [loading, setLoading] = useState(true)
   const hideSpinner = () => setLoading(false)
-
-  useEffect(() => {
-    console.log('Trailer useEffect', { uri })
-  }, [])
 
   return (
     <>
