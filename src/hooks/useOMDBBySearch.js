@@ -5,7 +5,8 @@ import mockMovies from '../test/mockOMDBBySearch.js'
 const { REACT_APP_OMDB_KEY: key } = process.env
 
 export default function useOMDBBySearch() {
-  const [loading, setLoading] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
   const [data, setData] = useState([])
 
   const testing = true
@@ -13,6 +14,7 @@ export default function useOMDBBySearch() {
     async (str) => {
       console.log('searchOMDBById', { str })
       setLoading(true)
+      setError(false)
       try {
         if (str === undefined) throw new Error('searchOMDB: No query')
         if (key === undefined) throw new Error('searchOMDB: No key')
@@ -41,6 +43,7 @@ export default function useOMDBBySearch() {
         setData(parsedMovies)
       } catch (error) {
         console.error(error)
+        setError(true)
       } finally {
         setLoading(false)
       }
@@ -48,7 +51,7 @@ export default function useOMDBBySearch() {
     [testing]
   )
 
-  return { loading, data, search }
+  return { loading, error, data, search }
 }
 
 const parse = (data) => ({
