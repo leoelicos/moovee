@@ -39,7 +39,7 @@ export default function TrailerButton({ title, year }) {
       type='primary'
       onClick={handleClickTrailer}>
       <FontAwesomeIcon icon={faFilm} />
-      <span>Watch Trailer</span>
+      &nbsp;<span>Trailer</span>
     </Button>
   )
 }
