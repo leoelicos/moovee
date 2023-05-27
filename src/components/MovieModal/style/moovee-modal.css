@@ -1,4 +1,4 @@
-div.moovee-modal {
+.moovee div.moovee-modal {
   height: 100%;
   width: 100% !important;
   transform-origin: 0 !important;
@@ -7,7 +7,7 @@ div.moovee-modal {
   padding: 0;
   margin: 0;
 }
-div.moovee-modal div.ant-modal-content {
+.moovee div.moovee-modal div.ant-modal-content {
   width: 100%;
   display: flex;
   padding: 0;
@@ -20,27 +20,27 @@ div.moovee-modal div.ant-modal-content {
   background: rgb(0, 0, 0);
   box-shadow: none;
 }
-div.moovee-modal div.ant-modal-content div.ant-modal-body {
+.moovee div.moovee-modal div.ant-modal-content div.ant-modal-body {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-div.moovee-modal div.ant-modal-content div.ant-modal-body div.modal-spin span.ant-spin-dot i.ant-spin-dot-item {
+.moovee div.moovee-modal div.ant-modal-content div.ant-modal-body div.modal-spin span.ant-spin-dot i.ant-spin-dot-item {
   width: 10vmin;
   height: 10vmin;
   background: linear-gradient(to right, #ffffff, #ed7d31);
 }
-div.moovee-modal div.ant-modal-content div.ant-modal-body div.modal-spin.finished {
+.moovee div.moovee-modal div.ant-modal-content div.ant-modal-body div.modal-spin.finished {
   display: none;
 }
-div.moovee-modal div.ant-modal-content div.ant-modal-body iframe.modal-iframe {
+.moovee div.moovee-modal div.ant-modal-content div.ant-modal-body iframe.modal-iframe {
   border: none;
 }
-div.moovee-modal div.ant-modal-content div.ant-modal-body iframe.modal-iframe.finished {
+.moovee div.moovee-modal div.ant-modal-content div.ant-modal-body iframe.modal-iframe.finished {
   display: none;
 }
-div.moovee-modal div.ant-modal-content div.ant-modal-footer {
+.moovee div.moovee-modal div.ant-modal-content div.ant-modal-footer {
   margin: 0;
   height: 0;
   position: absolute;
@@ -48,7 +48,7 @@ div.moovee-modal div.ant-modal-content div.ant-modal-footer {
   bottom: 0;
   left: 0;
 }
-div.moovee-modal div.ant-modal-content div.ant-modal-footer button {
+.moovee div.moovee-modal div.ant-modal-content div.ant-modal-footer button {
   position: absolute;
   bottom: -10vh;
   right: 0;
