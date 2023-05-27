@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Search from 'antd/es/input/Search'
 import cleanQuery from '../../utils/cleanQuery'
 import { useNavigate } from 'react-router-dom'
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { MovieContext, MovieDispatchContext } from '../../context'
 
 export default function SearchBar() {
@@ -29,7 +29,7 @@ export default function SearchBar() {
     if (query.length > 0) {
       const encoded = encode(query)
       next(encoded)
-      updateSearchText(encoded)
+      updateSearchText(query)
     }
   }
 
