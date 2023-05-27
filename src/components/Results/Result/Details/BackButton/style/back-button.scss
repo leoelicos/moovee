@@ -1,0 +1,22 @@
+.moovee {
+  main {
+    div.results {
+      div.result-container {
+        .result {
+          div.details {
+            button.back {
+              font-size: 16px;
+              line-height: unset;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border-radius: 0 0 1rem 1rem;
+              height: 2rem;
+              padding: 1rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
