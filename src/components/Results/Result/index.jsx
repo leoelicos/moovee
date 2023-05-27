@@ -1,86 +1,43 @@
-import { useContext, useState } from 'react'
-import useOMDBById from '../../../hooks/useOMDBById'
-import useYouTube from '../../../hooks/useYouTube'
+/* react */
+import { useState } from 'react'
 
-import { Button } from 'antd'
-
-import NoPosterLogo from '../../../images/noposter.png'
-import { MovieContext, MovieDispatchContext } from '../../../context'
-
-import './style/result-container.css'
-import './style/result.css'
+/* components */
 import Details from './Details/index.jsx'
 
-export default function Result({ poster, title, esrb, year, genre, actors, plot, imdbRating }) {
-  const { loading, data, search } = useOMDBById()
+import Poster from './Poster/index.jsx'
 
-  const [isPoster, setIsPoster] = useState(true)
-  const dispatch = useContext(MovieDispatchContext)
-  const { searchYouTube } = useYouTube(dispatch)
+/* style */
+import './style/result-container.css'
+import './style/result.css'
 
-  const { youTubeLoading, youTubeError } = useContext(MovieContext)
+export default function Result({ poster, title, year, imdbID }) {
+  const [isPosterComponent, setIsPosterComponent] = useState(true)
 
   const togglePoster = () => {
-    setIsPoster((prev) => !prev)
+    setIsPosterComponent((prev) => !prev)
   }
 
-  const handleClickTrailer = async () => {
-    try {
-      console.log('handleClickTrailer')
-      const query = encodeURIComponent([title || '', year || '', 'trailer'].join('+'))
-      console.log({ query })
-      await searchYouTube(query)
-      dispatch({ type: 'modalOpen' })
-    } catch (error) {
-      console.error(error)
-      dispatch({ type: 'modalClose' })
-    }
-  }
+  const PosterComponent = (
+    <Poster
+      src={poster}
+      togglePoster={togglePoster}
+    />
+  )
 
+  const DetailsComponent = (
+    <Details
+      title={title}
+      year={year}
+      imdbID={imdbID}
+      togglePoster={togglePoster}
+    />
+  )
   return (
     <div className={`result-container ${!poster ? 'empty' : ''}`}>
       <div className='result'>
-        {isPoster ? (
-          <>
-            <Button
-              className='poster'
-              block
-              type='primary'
-              onClick={togglePoster}>
-              {poster ? (
-                <img
-                  src={poster}
-                  alt='movie poster'
-                />
-              ) : (
-                <div className='noposter'>
-                  <div className='noposter-logo-wrapper'>
-                    <img
-                      className='noposter-logo'
-                      src={NoPosterLogo}
-                    />
-                  </div>
-                  <div className='noposter-text'>No Poster</div>
-                </div>
-              )}
-            </Button>
-            <div className='result-title'>{title}</div>
-          </>
-        ) : (
-          <Details
-            togglePoster={togglePoster}
-            title={title}
-            imdbRating={imdbRating}
-            youTubeLoading={youTubeLoading}
-            youTubeError={youTubeError}
-            handleClickTrailer={handleClickTrailer}
-            year={year}
-            esrb={esrb}
-            plot={plot}
-            actors={actors}
-            genre={genre}
-          />
-        )}
+        {isPosterComponent ? PosterComponent : DetailsComponent}
+        <div className='result-title'>{title}</div>
+        <div className='result-year'>{year}</div>
       </div>
     </div>
   )
