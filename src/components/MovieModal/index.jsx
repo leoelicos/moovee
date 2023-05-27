@@ -1,9 +1,9 @@
 import { Button, Modal } from 'antd'
 import { useContext } from 'react'
-import { MovieContext, MovieDispatchContext } from '../../context'
+import { MovieDispatchContext } from '../../context'
+import './style/moovee-modal.css'
 
-export default function ModalTrailer({ children }) {
-  const { isModalOpen } = useContext(MovieContext)
+export default function MovieModal({ children }) {
   const dispatch = useContext(MovieDispatchContext)
 
   const hideModal = () => {
@@ -12,7 +12,6 @@ export default function ModalTrailer({ children }) {
 
   return (
     <Modal
-      open={isModalOpen}
       onOk={hideModal}
       onCancel={hideModal}
       closable={false}
