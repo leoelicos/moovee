@@ -2,8 +2,8 @@ import { Button, Modal } from 'antd'
 import { useContext } from 'react'
 import { MovieDispatchContext } from '../../context'
 import './style/moovee-modal.css'
-
-export default function MovieModal({ children }) {
+import Trailer from './Trailer/index.jsx'
+export default function MovieModal({ uri, modalOpen }) {
   const dispatch = useContext(MovieDispatchContext)
 
   const hideModal = () => {
@@ -12,6 +12,7 @@ export default function MovieModal({ children }) {
 
   return (
     <Modal
+      open={modalOpen}
       onOk={hideModal}
       onCancel={hideModal}
       closable={false}
@@ -29,7 +30,7 @@ export default function MovieModal({ children }) {
       maskStyle={{ background: 'radial-gradient(circle, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.9) 100%)' }}
       transitionName='' // cancel popup animation
     >
-      {children}
+      <Trailer uri={uri} />
     </Modal>
   )
 }
