@@ -1,5 +1,8 @@
 .moovee {
   main {
+    h1.error {
+      color: white;
+    }
     div.results {
       div.result-container {
         text-align: left;
@@ -12,7 +15,7 @@
         transition: all 0.5s linear;
         border-radius: 1rem;
 
-        margin: 4px;
+        margin: 4px auto;
 
         @media (min-width: 340px) {
           width: calc((100% - 8px * 2) / 2);
@@ -35,7 +38,7 @@
         }
 
         &.empty {
-          h5 {
+          .no-movies {
             color: white;
             font-size: 1.2rem;
 
