@@ -20,20 +20,14 @@ export default function useYouTube() {
         throw new Error('useYouTube error: No key')
       }
 
-      const testing = true
-      let response = testing
-        ? await mockQuery()
-        : await axios('https://www.googleapis.com/youtube/v3/search', {
-            part: 'snippet',
-            key: key,
-            type: 'video',
-            q: term
-          })
+      const testing = false
+      let response = testing ? await mockQuery() : await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&key=${key}&type=video&q=${term}`).then((res) => res.json())
+      console.log('Youtube Response', { response })
       if (!response) {
         throw new Error('useYouTube error: googleapis')
       }
       const payload = `https://www.youtube.com/embed/${parse(response)}`
-      // console.log({ payload })
+      console.log('Youtube Payload', { payload })
       setLoading(false)
       setData(payload)
       return payload
@@ -54,4 +48,4 @@ function mockQuery() {
   })
 }
 
-const parse = (res) => res?.data?.items?.[0]?.id?.videoId || null
+const parse = (res) => res.items?.[0]?.id?.videoId || null
