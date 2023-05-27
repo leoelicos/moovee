@@ -1,39 +1,52 @@
 import axios from 'axios'
+import { useState } from 'react'
 
 const { REACT_APP_GAPI_KEY: key } = process.env
 
-export default function useYouTube(dispatch) {
+export default function useYouTube() {
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
+  const [data, setData] = useState(null)
+
   const searchYouTube = async (term) => {
     try {
-      console.log('searchYouTube', { term })
-      dispatch({ type: 'loadingTrue' })
-      if (!term) throw new Error('useYouTube error: No query')
-      if (key === undefined) throw new Error('useYouTube error: No key')
-      const uri = 'https://www.googleapis.com/youtube/v3/search'
-      const params = { part: 'snippet', key: key, type: 'video' }
-      let response
+      console.log(`searchYouTube ${term}`)
+      setLoading(true)
+      setError(false)
+      if (!term) {
+        throw new Error('useYouTube error: No query')
+      }
+      if (key === undefined) {
+        throw new Error('useYouTube error: No key')
+      }
+
       const testing = true
-      if (testing) response = await mockQuery()
-      else response = await axios(uri, { ...params, q: term })
-      const youtubeId = parse(response)
-      if (!youtubeId) throw new Error('googleapisYouTubeV3Search')
-      const youTubeData = `https://www.youtube.com/embed/${youtubeId}`
-      dispatch({ type: 'loadingFalse' })
-      dispatch({ type: 'setTrailer', action: { youTubeData } })
+      let response = testing
+        ? await mockQuery()
+        : await axios('https://www.googleapis.com/youtube/v3/search', {
+            part: 'snippet',
+            key: key,
+            type: 'video',
+            q: term
+          })
+      if (!response) {
+        throw new Error('useYouTube error: googleapis')
+      }
+      setData(`https://www.youtube.com/embed/${parse(response)}`)
     } catch (e) {
       console.error(e)
-      dispatch({ type: 'errorTrue' })
-      dispatch({ type: 'loadingFalse' })
-      dispatch({ type: 'setTrailer', action: { youTubeData: null } })
+      setError(true)
+      setData(null)
+    } finally {
+      setLoading(false)
     }
   }
-  return { searchYouTube }
+  return { loading, error, data, searchYouTube }
 }
 
 function mockQuery() {
-  const dummyData = { data: { items: [{ id: { videoId: 'bKn-NdqSkU4' } }] } }
   return new Promise((resolve) => {
-    setTimeout(() => resolve(dummyData), 1000)
+    setTimeout(() => resolve({ data: { items: [{ id: { videoId: 'bKn-NdqSkU4' } }] } }), 1000)
   })
 }
 
