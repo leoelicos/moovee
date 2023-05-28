@@ -7,7 +7,7 @@ const { REACT_APP_OMDB_KEY: key } = process.env
 export default function useOMDBById() {
   const [loading, setLoading] = useState(null)
   const [error, setError] = useState(null)
-  const [data, setData] = useState([])
+  const [data, setData] = useState({})
 
   const testing = false
   const search = useCallback(
