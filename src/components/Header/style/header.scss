@@ -24,10 +24,18 @@
       box-shadow: 0px 0px 2vh 0px #ffaaaa;
     }
 
-    img {
-      margin-bottom: 0;
-      height: 64px;
-      margin-right: unset;
+    .moovee-logo-button {
+      width: fit-content !important;
+      height: fit-content !important;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      line-height: 0;
+      img {
+        margin-bottom: 0;
+        height: 64px;
+        margin-right: unset;
+      }
     }
 
     p {
