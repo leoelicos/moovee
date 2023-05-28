@@ -34,7 +34,7 @@ export default function useOMDBById() {
         } else {
           console.log('useOMDB: axios OMDBByID')
           const uri = 'https://www.omdbapi.com'
-          const params = { apikey: key, type: 'movie', i: id }
+          const params = { apikey: key, type: 'movie', i: id, plot: 'full', r: 'json', v: 1 }
           const res = await axios(uri, { params })
           // console.log('axios result', { res })
           const data = res.data
@@ -58,7 +58,7 @@ export default function useOMDBById() {
 const parse = (data) => ({
   esrb: data.Rated === 'N/A' ? null : data.Rated,
   genre: data.Genre === 'N/A' ? null : data.Genre.split(', '),
-  actors: data.Actors || [],
+  actors: data.Actors === 'N/A' ? null : data.Actors,
   plot: data.Plot === 'N/A' ? null : data.Plot,
   imdbRating: data.Ratings?.length === 0 ? null : parseFloat(data.Ratings.find((r) => r.Source === 'Internet Movie Database').Value)
 })
