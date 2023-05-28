@@ -59,7 +59,7 @@ async function query(term) {
       maxResults: 1
     }
   })
-  console.log('youtube res', res)
+  // console.log('youtube res', res)
   return res.data
 }
 
