@@ -18,17 +18,15 @@ export default function SearchHistory() {
     dispatch({ type: 'setSearchText', action: { text } })
   }
 
+  const store = localStorage.getItem('movies')
+
   const historyOptions = useMemo(
     () =>
-      [
-        'Titanic',
-        'Babe',
-        'Wanted' //
-      ].map((title) => ({
+      JSON.parse(store).map((title) => ({
         label: title,
         value: title
       })) || [],
-    []
+    [store]
   )
 
   return (
