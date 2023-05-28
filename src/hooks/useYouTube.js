@@ -10,7 +10,7 @@ export default function useYouTube() {
 
   const searchYouTube = async (term) => {
     try {
-      console.log(`searchYouTube ${term}`)
+      // console.log(`searchYouTube ${term}`)
       setLoading(true)
       setError(false)
       if (!term) {
@@ -22,12 +22,12 @@ export default function useYouTube() {
 
       const testing = false
       let response = testing ? await mockQuery() : await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&key=${key}&type=video&q=${term}`).then((res) => res.json())
-      console.log('Youtube Response', { response })
+      // console.log('Youtube Response', { response })
       if (!response) {
         throw new Error('useYouTube error: googleapis')
       }
       const payload = `https://www.youtube.com/embed/${parse(response)}`
-      console.log('Youtube Payload', { payload })
+      // console.log('Youtube Payload', { payload })
       setLoading(false)
       setData(payload)
       return payload

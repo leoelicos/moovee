@@ -31,7 +31,7 @@ export default function MovieProvider({ children }) {
 
 /* return updated state to useReducer */
 function MovieReducer(state, { type, action }) {
-  console.log('MovieReducer', { type, action })
+  // console.log('MovieReducer', { type, action })
   switch (type) {
     case 'setSearchText': {
       return { ...state, searchText: action.text }
@@ -58,11 +58,8 @@ function MovieReducer(state, { type, action }) {
     }
 
     case 'gapiData': {
-      const { data } = action
-      if (!data) return state
-      const newState = { ...state, gapiData: data }
-      console.log({ newState })
-      return newState
+      if (!action.data) return state
+      return { ...state, gapiData: action.data }
     }
 
     case 'modalOpen': {

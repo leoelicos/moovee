@@ -6,6 +6,7 @@ import NoMovies from './NoMovies.jsx'
 import { useSearchParams } from 'react-router-dom'
 import useOMDBBySearch from '../../hooks/useOMDBBySearch.js'
 import './style/results.css'
+import { omdbSerialize } from '../../utils/omdbSerialize.js'
 export default function Results() {
   const { loading, error, data, search } = useOMDBBySearch()
 
@@ -14,7 +15,8 @@ export default function Results() {
 
   useEffect(() => {
     if (!query) return
-    search(query)
+    const serialised = omdbSerialize(query)
+    search(serialised)
   }, [search, query])
 
   if (loading) return <ResultsLoadingSpinner />

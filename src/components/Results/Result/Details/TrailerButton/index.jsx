@@ -20,7 +20,7 @@ export default function TrailerButton({ title, year }) {
     try {
       const query = getTrailerString(title, year)
       const tempData = await searchYouTube(query)
-      console.log('new data', { tempData })
+      // console.log('new data', { tempData })
       dispatch({ type: 'gapiData', action: { data: tempData } })
       dispatch({ type: 'modalOpen' })
     } catch (error) {

@@ -26,7 +26,7 @@ export default function Result({ poster, title, year, imdbID }) {
     if (!hasToggled.current) {
       search(imdbID)
       hasToggled.current = true
-      console.log('set toggled to true')
+      // console.log('set toggled to true')
     }
   }
 
