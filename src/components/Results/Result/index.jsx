@@ -19,6 +19,8 @@ export default function Result({ poster, title, year, imdbID }) {
 
   const hasToggled = useRef(false)
 
+  const [trailer, setTrailer] = useState(undefined)
+
   const togglePoster = () => {
     /* when they click this, state should be stored so when they click it again it prevents a new fetch */
     setIsPosterComponent((prev) => !prev)
@@ -46,6 +48,8 @@ export default function Result({ poster, title, year, imdbID }) {
       loading={loading}
       error={error}
       data={data}
+      trailer={trailer}
+      setTrailer={setTrailer}
     />
   )
 
