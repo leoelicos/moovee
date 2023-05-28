@@ -16,6 +16,7 @@ export default function Details({
       <TrailerButton
         title={title}
         year={year}
+        data={data}
       />
       <MovieData
         data={data}
