@@ -15,7 +15,16 @@ export default function Results() {
 
   useEffect(() => {
     if (!query) return
-    //TODO put to local storage
+
+    const putToLocalStorage = () => {
+      const store = localStorage.getItem('movies')
+      let parsed = [query]
+      if (store) parsed = parsed.concat(...JSON.parse(store).filter((movie) => movie !== query))
+      if (parsed.length > 5) parsed.pop()
+      localStorage.setItem('movies', JSON.stringify(parsed))
+    }
+    putToLocalStorage()
+
     const serialised = omdbSerialize(query)
     search(serialised)
   }, [search, query])
@@ -30,7 +39,12 @@ export default function Results() {
           <NoMovies />
         ) : (
           data
-            .sort((a, b) => (+b.year >= +a.year ? 1 : -1))
+            .sort((a, b) => {
+              if (b.poster && !a.poster) return 1
+              else if (a.poster && !b.poster) return -1
+              else if (+b.year >= +a.year) return 1
+              else return -1
+            })
             .map((movie, i) => (
               <Result
                 key={i}
