@@ -49,9 +49,8 @@ function mockQuery() {
 
 async function query(term) {
   console.log('useYouTube: axios Youtube')
-  let res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&key=${key}&type=video&q=${term}`)
-  res = await res.json()
-  return res
+  let res = await axios(`https://www.googleapis.com/youtube/v3/search?part=snippet&key=${key}&type=video&q=${term}`)
+  return res.data
 }
 
 const parse = (res) => res.items?.[0]?.id?.videoId || null
