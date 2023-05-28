@@ -49,7 +49,17 @@ function mockQuery() {
 
 async function query(term) {
   console.log('useYouTube: axios Youtube')
-  let res = await axios(`https://www.googleapis.com/youtube/v3/search?part=snippet&key=${key}&type=video&q=${term}`)
+  let res = await axios(`https://www.googleapis.com/youtube/v3/search`, {
+    params: {
+      part: 'snippet',
+      key: key,
+      type: 'video',
+      q: term,
+      safeSearch: 'strict',
+      maxResults: 1
+    }
+  })
+  console.log('youtube res', res)
   return res.data
 }
 
