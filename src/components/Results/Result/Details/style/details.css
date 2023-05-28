@@ -16,7 +16,8 @@
   overflow-y: auto;
   gap: 4px;
   text-align: center;
-  padding: 4px;
+  padding: 0 4px 16px 4px;
+  width: 100%;
   /* Track */
   /* Handle */
   /* Handle on hover */
@@ -47,11 +48,18 @@
   font-weight: 400;
   font-size: 16px;
 }
-.moovee main div.results div.result-container .result div.details div.movie-data .actors,
-.moovee main div.results div.result-container .result div.details div.movie-data .genre {
+.moovee main div.results div.result-container .result div.details div.movie-data .plot .data {
+  text-align: left;
+}
+.moovee main div.results div.result-container .result div.details div.movie-data .actors .data,
+.moovee main div.results div.result-container .result div.details div.movie-data .genre .data {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 4px 0;
+}
+.moovee main div.results div.result-container .result div.details div.movie-data .label {
+  color: hotpink;
+  margin: 8px 0 4px 0;
 }/*# sourceMappingURL=details.css.map */
