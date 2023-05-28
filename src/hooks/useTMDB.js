@@ -18,7 +18,7 @@ export default function useTMDB() {
         // console.log('useTMDB: mock results')
         retrievedMovieTitles = mockTMDB
       } else {
-        console.log('useTMDB: axios')
+        console.log('useTMDB: axios TMDbAPIBySearch')
         retrievedMovieTitles = await TMDbAPIBySearch()
       }
 
