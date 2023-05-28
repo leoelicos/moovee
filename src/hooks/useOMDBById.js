@@ -32,7 +32,7 @@ export default function useOMDBById() {
           const res = await testingPromise()
           parsedMovie = parse(res)
         } else {
-          // console.log('useOMDB: axios OMDBByID')
+          console.log('useOMDB: axios OMDBByID')
           const uri = 'https://www.omdbapi.com'
           const params = { apikey: key, type: 'movie', i: id }
           const res = await axios(uri, { params })

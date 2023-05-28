@@ -31,7 +31,7 @@ export default function useOMDBBySearch() {
             })
           parsedMovies = await testingPromise()
         } else {
-          // console.log('useOMDB: axios OMDBBySearch')
+          console.log('useOMDB: axios OMDBBySearch')
           const uri = 'https://www.omdbapi.com'
           const params = { apikey: key, type: 'movie', page: 1, s: str }
           const res = await axios(uri, { params })
