@@ -15,6 +15,7 @@ export default function Results() {
 
   useEffect(() => {
     if (!query) return
+    //TODO put to local storage
     const serialised = omdbSerialize(query)
     search(serialised)
   }, [search, query])
@@ -28,13 +29,15 @@ export default function Results() {
         {!data || data.length === 0 ? (
           <NoMovies />
         ) : (
-          data.map((movie, i) => (
-            <Result
-              key={i}
-              idx={i}
-              {...movie}
-            />
-          ))
+          data
+            .sort((a, b) => (+b.year >= +a.year ? 1 : -1))
+            .map((movie, i) => (
+              <Result
+                key={i}
+                idx={i}
+                {...movie}
+              />
+            ))
         )}
       </div>
     </>
