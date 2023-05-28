@@ -11,34 +11,52 @@ export default function MovieData({ data, loading, error }) {
     <div className='movie-data'>
       <Stars stars={imdbRating} />
 
-      {esrb && <div className='esrb'>{esrb}</div>}
+      {esrb && (
+        <div className='esrb'>
+          <div className='label'>Rating:</div>
+          <div className='data'>{esrb}</div>
+        </div>
+      )}
 
-      {plot && <div className='plot'>{plot}</div>}
+      {plot && (
+        <div className='plot'>
+          <div className='label'>Plot:</div>
+          <div className='data'>{plot}</div>
+        </div>
+      )}
 
       {actors && actors.length > 0 && (
         <div className='actors'>
-          {actors.split(', ').map((actor, i) => (
-            <Tag
-              key={i}
-              color='#222'
-              style={{ color: 'white' }}>
-              {actor}
-            </Tag>
-          ))}
+          <div className='label'>Actors:</div>
+          <div className='data'>
+            {actors.split(', ').map((actor, i) => (
+              <Tag
+                key={i}
+                color='#222'
+                style={{ color: 'white' }}>
+                {actor}
+              </Tag>
+            ))}
+          </div>
         </div>
       )}
 
       {genre && genre.length > 0 && (
         <div className='genre'>
-          {genre.map((g, i) => (
-            <Tag
-              color='black'
-              key={i}>
-              {g}
-            </Tag>
-          ))}
+          <div className='label'>Genre:</div>
+          <div className='data'>
+            {genre.map((g, i) => (
+              <Tag
+                color='black'
+                key={i}>
+                {g}
+              </Tag>
+            ))}
+          </div>
         </div>
       )}
+
+      {!esrb && !plot && !actors && !genre && <div className='label'>No data</div>}
     </div>
   )
 }
