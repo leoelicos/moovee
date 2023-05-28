@@ -9,7 +9,9 @@ export default function Details({
   year,
   loading,
   error,
-  data //
+  data,
+  trailer,
+  setTrailer //
 }) {
   return (
     <div className='details'>
@@ -17,6 +19,8 @@ export default function Details({
         title={title}
         year={year}
         data={data}
+        trailer={trailer}
+        setTrailer={setTrailer}
       />
       <MovieData
         data={data}
