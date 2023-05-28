@@ -6,7 +6,7 @@ import NoMovies from './NoMovies.jsx'
 import { useSearchParams } from 'react-router-dom'
 import useOMDBBySearch from '../../hooks/useOMDBBySearch.js'
 import './style/results.css'
-import { omdbSerialize } from '../../utils/omdbSerialize.js'
+import { querySerialize } from '../../utils/querySerialize.js'
 export default function Results() {
   const { loading, error, data, search } = useOMDBBySearch()
 
@@ -25,8 +25,8 @@ export default function Results() {
     }
     putToLocalStorage()
 
-    const serialised = omdbSerialize(query)
-    search(serialised)
+    const serialized = querySerialize(query)
+    search(serialized)
   }, [search, query])
 
   if (loading) return <ResultsLoadingSpinner />
