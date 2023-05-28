@@ -1,7 +1,7 @@
 import { Spin, Tag } from 'antd'
 import Stars from './Stars.jsx'
 export default function MovieData({ data, loading, error }) {
-  console.log({ data })
+  // console.log({ data })
 
   const { esrb, plot, actors, genre, imdbRating } = data
 

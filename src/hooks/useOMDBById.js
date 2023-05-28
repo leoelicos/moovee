@@ -12,7 +12,7 @@ export default function useOMDBById() {
   const testing = false
   const search = useCallback(
     async (id) => {
-      console.log('searchOMDBById', { id })
+      // console.log('searchOMDBById', { id })
       setLoading(true)
       setError(false)
       try {
@@ -23,24 +23,24 @@ export default function useOMDBById() {
         if (testing) {
           const testingPromise = () =>
             new Promise((res) => {
-              console.log('useOMDBById mock loading')
+              // console.log('useOMDBById mock loading')
               setTimeout(() => {
-                console.log('useOMDBById loading finished')
+                // console.log('useOMDBById loading finished')
                 res(mockMovie)
               }, 2000)
             })
           const res = await testingPromise()
           parsedMovie = parse(res)
         } else {
-          console.log('useOMDB: axios OMDBByID')
+          // console.log('useOMDB: axios OMDBByID')
           const uri = 'https://www.omdbapi.com'
           const params = { apikey: key, type: 'movie', i: id }
           const res = await axios(uri, { params })
-          console.log('axios result', { res })
+          // console.log('axios result', { res })
           const data = res.data
           parsedMovie = parse(data)
         }
-        console.log('useOMDB: parsed', parsedMovie)
+        // console.log('useOMDB: parsed', parsedMovie)
         setData(parsedMovie)
       } catch (error) {
         setError(true)
