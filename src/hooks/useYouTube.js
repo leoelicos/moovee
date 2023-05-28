@@ -21,8 +21,7 @@ export default function useYouTube() {
       }
 
       const testing = false
-      let response = testing ? await mockQuery() : await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&key=${key}&type=video&q=${term}`).then((res) => res.json())
-      // console.log('Youtube Response', { response })
+      let response = testing ? await mockQuery() : await query(term)
       if (!response) {
         throw new Error('useYouTube error: googleapis')
       }
@@ -46,6 +45,13 @@ function mockQuery() {
   return new Promise((resolve) => {
     setTimeout(() => resolve({ data: { items: [{ id: { videoId: 'bKn-NdqSkU4' } }] } }), 1000)
   })
+}
+
+async function query(term) {
+  console.log('useYouTube: axios Youtube')
+  let res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&key=${key}&type=video&q=${term}`)
+  res = await res.json()
+  return res
 }
 
 const parse = (res) => res.items?.[0]?.id?.videoId || null
