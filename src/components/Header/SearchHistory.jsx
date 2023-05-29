@@ -22,10 +22,12 @@ export default function SearchHistory() {
 
   const historyOptions = useMemo(
     () =>
-      JSON.parse(store).map((title) => ({
-        label: title,
-        value: title
-      })) || [],
+      store
+        ? JSON.parse(store).map((title) => ({
+            label: title,
+            value: title
+          }))
+        : [],
     [store]
   )
 
