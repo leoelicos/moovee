@@ -4,7 +4,7 @@
 
 ## Description
 
-`moovee` allows movie-watchers to select and watch movie trailers that they like.
+Select and watch movie trailers.
 
 The team that made the original app is credited below and its workflow was coordinated on [GitHub Projects](https://github.com/umairkhalid/movie-planner/projects/1).
 
