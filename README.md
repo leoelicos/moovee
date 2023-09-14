@@ -1,6 +1,6 @@
 # moovee
 
-![OMDB](https://img.shields.io/badge/'17-0?label=OMDB%20API&style=for-the-badge&labelColor=white&color=black) ![YouTube Data Api](https://img.shields.io/badge/v3-0?label=YouTube%20Data%20API&style=for-the-badge&labelColor=white&color=black) ![TMDB Api](https://img.shields.io/badge/v3-0?label=TMDB%20API&style=for-the-badge&labelColor=white&color=black)
+![OMDB](https://img.shields.io/badge/'17-0?label=OMDB&style=for-the-badge&labelColor=white&color=black) ![YouTube Data Api](https://img.shields.io/badge/v3-0?label=YouTube%20Data%20API&style=for-the-badge&labelColor=white&color=black) ![TMDB Api](https://img.shields.io/badge/v3-0?label=TMDB%20API&style=for-the-badge&labelColor=white&color=black)
 
 ## Description
 
