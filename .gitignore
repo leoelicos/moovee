@@ -1,12 +1,13 @@
- 
-# dependencies
-/node_modules
- 
-
-# production
-/build
-
-# misc
+node_modules
+build
+coverage
+playwright-report
+test-results
+blob-report
 .DS_Store
 .env
+.env.*
+!.env.example
 *.pptx
+*.tsbuildinfo
+screenshots
