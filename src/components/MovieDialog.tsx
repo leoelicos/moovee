@@ -12,9 +12,11 @@ export function MovieDialog({ id, onClose }: { id: string; onClose: () => void }
   const details = useAsync(id, (signal) => getMovie(id, keys.omdb, signal))
   return (
     <Dialog labelledBy='movie-title' onClose={onClose} className='dialog--movie'>
-      <button type='button' className='icon-button dialog__close' aria-label='Close details' onClick={onClose}>
-        <Icon name='close' />
-      </button>
+      <div className='dialog__bar'>
+        <button type='button' className='icon-button' aria-label='Close details' onClick={onClose}>
+          <Icon name='close' />
+        </button>
+      </div>
       {details.status === 'success' ? (
         <MovieBody movie={details.data} />
       ) : details.status === 'error' ? (

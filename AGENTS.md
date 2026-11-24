@@ -18,7 +18,7 @@ Playwright + @axe-core/playwright (Chromium). Node 22+.
 ```
 index.html                 entry HTML; inline script applies the saved theme before paint
 vite.config.ts             Vite + Vitest config (envPrefix VITE_ and REACT_APP_, outDir build, coverage thresholds)
-playwright.config.ts       e2e: builds with placeholder keys, serves with vite preview on :4173
+playwright.config.ts       e2e: builds with placeholder keys, serves with vite preview on 127.0.0.1:4317 (E2E_PORT)
 eslint.config.js           ESLint 9 flat config (typescript-eslint strict, jsx-a11y strict, react-hooks)
 vercel.json                SPA rewrite to /index.html
 .github/workflows/ci.yml   the only CI workflow: quality job + e2e job

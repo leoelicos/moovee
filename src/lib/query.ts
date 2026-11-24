@@ -85,6 +85,7 @@ export function sortMovies(items: MovieSummary[], sort: SortKey): MovieSummary[]
     case 'title':
       return copy.sort((a, b) => a.title.localeCompare(b.title))
     default:
-      return copy
+      // Keep OMDb's order, but titles with a poster first (as the old app did). sort() is stable.
+      return copy.sort((a, b) => Number(b.poster !== null) - Number(a.poster !== null))
   }
 }

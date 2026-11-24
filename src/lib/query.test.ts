@@ -43,6 +43,15 @@ describe('sortMovies', () => {
     expect(sortMovies(items, sort).map((x) => x.title)).toEqual(order)
   })
 
+  it('best match keeps API order but lifts titles with posters', () => {
+    const withPoster = { ...m('P', '1990'), poster: 'https://x.test/p.jpg' }
+    expect(sortMovies([m('N', '2000'), withPoster, m('O', '2001')], 'relevance').map((x) => x.title)).toEqual([
+      'P',
+      'N',
+      'O'
+    ])
+  })
+
   it('puts unknown years last when newest first', () => {
     expect(sortMovies([m('X', '????'), m('Y', '2000')], 'newest').map((x) => x.title)).toEqual(['Y', 'X'])
   })

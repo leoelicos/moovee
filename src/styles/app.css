@@ -961,17 +961,10 @@ kbd {
   padding: var(--space-3) var(--space-3) 0 var(--space-6);
 }
 
-.dialog__close {
-  position: absolute;
-  inset-block-start: var(--space-2);
-  inset-inline-end: var(--space-2);
-  z-index: 2;
-  background: rgb(0 0 0 / 55%);
-  color: #fff;
-}
-
-.dialog__close:hover {
-  background: rgb(0 0 0 / 75%);
+.dialog__bar {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--space-1);
 }
 
 .shortcuts {
@@ -1019,8 +1012,6 @@ kbd {
   aspect-ratio: 16 / 9;
   inline-size: 100%;
   background: #000;
-  border-start-start-radius: inherit;
-  border-start-end-radius: inherit;
   overflow: hidden;
 }
 
@@ -1112,7 +1103,6 @@ kbd {
   font-size: clamp(1.35rem, 4vw, 2rem);
   letter-spacing: -0.02em;
   overflow-wrap: anywhere;
-  padding-inline-end: var(--space-8);
 }
 
 .detail__meta {
