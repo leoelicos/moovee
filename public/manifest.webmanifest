@@ -1,0 +1,10 @@
+{
+  "name": "Moovee",
+  "short_name": "Moovee",
+  "description": "Search movie trailers",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0d12",
+  "theme_color": "#0b0d12",
+  "icons": [{ "src": "/favicon.png", "sizes": "398x398", "type": "image/png" }]
+}
