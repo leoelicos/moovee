@@ -13,10 +13,22 @@ describe('home (discover)', () => {
     mockAppApis()
     const { container } = renderApp('/')
     expect(await screen.findByRole('heading', { level: 1, name: 'Dune: Part Two' })).toBeInTheDocument()
-    const rail = screen.getByRole('region', { name: 'Popular right now' })
-    expect(within(rail).getByRole('link', { name: /Wicked/ })).toHaveAttribute('href', '/search?q=Wicked')
+    const rail = screen.getByRole('region', { name: 'Trending this week' })
+    expect(await within(rail).findByRole('link', { name: /Wicked/ })).toHaveAttribute('href', '/search?q=Wicked')
     expect(within(rail).getByTestId('poster-fallback')).toBeInTheDocument()
     await expectNoAxeViolations(container)
+  })
+
+  it('switches trending between movies and series through the URL', async () => {
+    mockAppApis()
+    const { user, location } = renderApp('/')
+    await screen.findByRole('link', { name: /Wicked/ })
+    await user.click(screen.getByRole('radio', { name: 'Series' }))
+    expect(location().search).toBe('?t=series')
+    const link = await screen.findByRole('link', { name: /The Last of Us/ })
+    expect(link).toHaveAttribute('href', '/search?q=The+Last+of+Us&type=series')
+    await user.click(screen.getByRole('radio', { name: 'Movies' }))
+    expect(location().search).toBe('')
   })
 
   it('falls back to quick picks when TMDB fails', async () => {
@@ -280,6 +292,43 @@ describe('detail and trailer', () => {
   })
 })
 
+describe('watchlist and similar titles', () => {
+  it('saves from the detail view, lists on /watchlist and opens from there', async () => {
+    mockAppApis()
+    const { user, location } = renderApp('/search?q=alien&m=tt1000001')
+    const dialog = await screen.findByRole('dialog', { name: 'Title tt1000001' })
+    const similar = await within(dialog).findByRole('list', { name: 'Similar titles' })
+    expect(within(similar).getByRole('link', { name: /Dune: Part Two/ })).toHaveAttribute(
+      'href',
+      '/search?q=Dune%3A+Part+Two'
+    )
+    const save = within(dialog).getByRole('button', { name: 'Add to watchlist' })
+    expect(save).toHaveAttribute('aria-pressed', 'false')
+    await user.click(save)
+    expect(within(dialog).getByRole('button', { name: 'On your watchlist' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('link', { name: 'Watchlist, 1 saved' })).toHaveAttribute('href', '/watchlist')
+    await user.click(within(dialog).getByRole('button', { name: 'Close details' }))
+    await user.click(screen.getByRole('link', { name: 'Watchlist, 1 saved' }))
+    expect(await screen.findByRole('heading', { level: 1, name: 'Your watchlist' })).toBeInTheDocument()
+    expect(screen.getByText('1 saved on this device')).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: /^Title tt1000001,/ }))
+    expect(location()).toMatchObject({ pathname: '/watchlist', search: '?m=tt1000001' })
+    const again = await screen.findByRole('dialog')
+    await user.click(within(again).getByRole('button', { name: 'On your watchlist' }))
+    await user.click(within(again).getByRole('button', { name: 'Close details' }))
+    expect(await screen.findByRole('heading', { name: 'Nothing saved yet' })).toBeInTheDocument()
+  })
+
+  it('hides "More like this" when TMDB fails', async () => {
+    mockAppApis({ tmdbFail: true })
+    renderApp('/?m=tt1000001')
+    const dialog = await screen.findByRole('dialog', { name: 'Title tt1000001' })
+    await waitFor(() =>
+      expect(within(dialog).queryByRole('heading', { name: 'More like this' })).not.toBeInTheDocument()
+    )
+  })
+})
+
 describe('theme and pages', () => {
   it('cycles the theme', async () => {
     mockAppApis()
@@ -331,5 +380,75 @@ describe('theme and pages', () => {
     expect(await screen.findByText('418 Teapot')).toBeInTheDocument()
     await act(() => router.navigate('/odd'))
     expect(await screen.findByText('Unknown error')).toBeInTheDocument()
+  })
+})
+
+describe('command palette', () => {
+  it('opens with Ctrl+K, filters, moves with arrows and runs a search', async () => {
+    mockAppApis()
+    localStorage.setItem('moovee:recent', JSON.stringify(['heat']))
+    const { user, location } = renderApp('/')
+    await user.keyboard('{Control>}k{/Control}')
+    const dialog = await screen.findByRole('dialog', { name: 'Command palette' })
+    const box = within(dialog).getByRole('combobox', { name: 'Type a title or a command' })
+    expect(box).toHaveFocus()
+    await expectNoAxeViolations(dialog)
+    expect(within(dialog).getByRole('option', { name: /heat/ })).toHaveAttribute('aria-selected', 'true')
+    await user.type(box, 'alien')
+    const options = within(dialog).getAllByRole('option')
+    expect(options[0]).toHaveTextContent('Search for “alien”')
+    await user.keyboard('{Enter}')
+    expect(location().search).toBe('?q=alien')
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    expect(JSON.parse(localStorage.getItem('moovee:recent') ?? '[]')[0]).toBe('alien')
+  })
+
+  it('reaches saved titles, pages and actions', async () => {
+    mockAppApis()
+    localStorage.setItem(
+      'moovee:watchlist',
+      JSON.stringify([{ id: 'tt1000009', title: 'Heat', year: '1995', type: 'movie', poster: null, addedAt: 1 }])
+    )
+    const { user, location } = renderApp('/')
+    await user.click(screen.getByRole('button', { name: 'Command palette' }))
+    let dialog = await screen.findByRole('dialog', { name: 'Command palette' })
+    expect(within(dialog).getAllByRole('option')[0]).toHaveTextContent('Heat (1995)')
+    await user.keyboard('{ArrowUp}')
+    expect(within(dialog).getByRole('option', { name: /Keyboard shortcuts/ })).toHaveAttribute('aria-selected', 'true')
+    await user.keyboard('{ArrowDown}{Enter}')
+    expect(location()).toMatchObject({ pathname: '/watchlist', search: '?m=tt1000009' })
+    fireEvent(await screen.findByRole('dialog'), new Event('cancel', { cancelable: true }))
+
+    await user.keyboard('{Meta>}k{/Meta}')
+    dialog = await screen.findByRole('dialog', { name: 'Command palette' })
+    await user.type(within(dialog).getByRole('combobox'), 'theme')
+    await user.click(within(dialog).getByRole('option', { name: /Switch theme/ }))
+    expect(document.documentElement.dataset.theme).toBe('light')
+    expect(screen.getByRole('button', { name: /^Theme: Light/ })).toBeInTheDocument()
+
+    await user.keyboard('{Control>}k{/Control}')
+    dialog = await screen.findByRole('dialog', { name: 'Command palette' })
+    await user.type(within(dialog).getByRole('combobox'), 'shortcuts')
+    fireEvent.mouseMove(within(dialog).getByRole('option', { name: /Keyboard shortcuts/ }))
+    await user.keyboard('{Enter}')
+    expect(await screen.findByRole('dialog', { name: 'Keyboard shortcuts' })).toBeInTheDocument()
+    // Ctrl+K does nothing while another dialog is open.
+    await user.keyboard('{Control>}k{/Control}')
+    expect(screen.getAllByRole('dialog')).toHaveLength(1)
+    fireEvent(screen.getByRole('dialog'), new Event('cancel', { cancelable: true }))
+
+    await user.keyboard('{Control>}k{/Control}')
+    dialog = await screen.findByRole('dialog', { name: 'Command palette' })
+    await user.type(within(dialog).getByRole('combobox'), 'zzzzqq')
+    expect(within(dialog).queryAllByRole('option')).toHaveLength(1)
+    await user.clear(within(dialog).getByRole('combobox'))
+    await user.type(within(dialog).getByRole('combobox'), 'watchlist')
+    await user.keyboard('{ArrowDown}{Enter}')
+    expect(location().pathname).toBe('/watchlist')
+    await user.keyboard('{Control>}k{/Control}')
+    dialog = await screen.findByRole('dialog', { name: 'Command palette' })
+    await user.type(within(dialog).getByRole('combobox'), 'home')
+    await user.keyboard('{ArrowDown}{Enter}')
+    expect(location().pathname).toBe('/')
   })
 })

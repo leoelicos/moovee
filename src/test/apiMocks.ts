@@ -1,4 +1,4 @@
-import { jsonResponse, mockFetch, movieResponse, searchItem, tmdbResponse } from './fixtures'
+import { jsonResponse, mockFetch, movieResponse, searchItem, tmdbResponse, tmdbTvResponse } from './fixtures'
 
 export interface AppMockOptions {
   total?: number
@@ -23,7 +23,13 @@ export function mockAppApis({ total = 25, omdbFail = false, tmdbFail = false, tr
       )
       return jsonResponse({ Response: 'True', Search: items, totalResults: String(total) })
     },
-    'api.themoviedb.org': () => (tmdbFail ? jsonResponse({}, 500) : jsonResponse(tmdbResponse)),
+    'api.themoviedb.org': (url) => {
+      if (tmdbFail) return jsonResponse({}, 500)
+      if (url.pathname.includes('/trending/tv')) return jsonResponse(tmdbTvResponse)
+      if (url.pathname.includes('/find/')) return jsonResponse({ movie_results: [{ id: 603 }], tv_results: [] })
+      if (url.pathname.includes('/recommendations')) return jsonResponse(tmdbResponse)
+      return jsonResponse(tmdbResponse)
+    },
     'www.googleapis.com': () =>
       trailer === 'error'
         ? jsonResponse({}, 403)

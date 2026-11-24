@@ -3,6 +3,7 @@ import { Icon } from './Icon'
 
 const SHORTCUTS: [string[], string][] = [
   [['/'], 'Focus search'],
+  [['Ctrl', 'K'], 'Command palette (⌘K on Mac)'],
   [['↓'], 'From search, jump to results'],
   [['←', '→', '↑', '↓'], 'Move between results'],
   [['Home', 'End'], 'First or last result'],

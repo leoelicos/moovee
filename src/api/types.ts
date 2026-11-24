@@ -41,6 +41,7 @@ export interface MovieDetails extends MovieSummary {
 
 export interface TrendingMovie {
   id: number
+  kind: 'movie' | 'series'
   title: string
   year: string
   overview: string

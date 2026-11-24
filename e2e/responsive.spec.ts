@@ -22,6 +22,38 @@ async function expectUsableControls(page: Page, scope = 'body') {
   expect(problems).toEqual([])
 }
 
+/**
+ * No floating control (position fixed or sticky, other than the full-width header bar) may sit on top of a
+ * result card. Checked at the top of the page and after scrolling, so a bottom-anchored button would be caught too.
+ */
+async function expectNoFloatingOverCards(page: Page) {
+  const check = () =>
+    page.evaluate(() => {
+      const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-card]')).map((c) =>
+        c.getBoundingClientRect()
+      )
+      const floating = Array.from(document.querySelectorAll<HTMLElement>('body *')).filter((el) => {
+        if (el.closest('header.header') || el.closest('dialog')) return false
+        const pos = getComputedStyle(el).position
+        return (pos === 'fixed' || pos === 'sticky') && el.offsetParent !== null
+      })
+      const hits: string[] = []
+      for (const el of floating) {
+        const f = el.getBoundingClientRect()
+        if (f.width === 0 || f.height === 0) continue
+        for (const c of cards) {
+          const overlap = f.left < c.right && f.right > c.left && f.top < c.bottom && f.bottom > c.top
+          if (overlap) hits.push(`${el.tagName}.${el.className} overlaps a card`)
+        }
+      }
+      return [...new Set(hits)]
+    })
+  expect(await check()).toEqual([])
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight / 2))
+  expect(await check()).toEqual([])
+  await page.evaluate(() => window.scrollTo(0, 0))
+}
+
 for (const width of WIDTHS) {
   for (const colorScheme of ['light', 'dark'] as const) {
     test.describe(`${width}px ${colorScheme}`, () => {
@@ -44,6 +76,7 @@ for (const width of WIDTHS) {
           return els.filter((el) => Math.abs(el.getBoundingClientRect().top - top) < 2).length
         })
         expect(columns).toBeGreaterThanOrEqual(width < 768 ? 2 : 4)
+        await expectNoFloatingOverCards(page)
 
         await page.locator('[data-card]').first().click()
         const dialog = page.getByRole('dialog')
@@ -55,6 +88,30 @@ for (const width of WIDTHS) {
         const sideways = await dialog.evaluate((el) => el.scrollWidth > el.clientWidth)
         expect(sideways).toBe(false)
         await expectUsableControls(page, 'dialog')
+        await page.keyboard.press('Escape')
+
+        // The watchlist grid uses the same cards: same rule.
+        await page.goto('/watchlist')
+        await page.evaluate(() =>
+          localStorage.setItem(
+            'moovee:watchlist',
+            JSON.stringify(
+              Array.from({ length: 6 }, (_, i) => ({
+                id: `tt900000${i + 1}`,
+                title: `Saved ${i + 1}`,
+                year: '2001',
+                type: 'movie',
+                poster: null,
+                addedAt: i
+              }))
+            )
+          )
+        )
+        await page.reload()
+        await expect(page.locator('[data-card]')).toHaveCount(6)
+        await expectNoHorizontalScroll(page)
+        await expectNoFloatingOverCards(page)
+        await expectUsableControls(page)
       })
     })
   }

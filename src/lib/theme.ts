@@ -1,5 +1,6 @@
 export type ThemeChoice = 'system' | 'light' | 'dark'
 export const THEME_KEY = 'moovee:theme'
+export const THEME_EVENT = 'moovee:theme'
 export const THEME_ORDER: ThemeChoice[] = ['system', 'light', 'dark']
 
 export function getTheme(): ThemeChoice {
@@ -21,6 +22,7 @@ export function applyTheme(choice: ThemeChoice, root: HTMLElement = document.doc
   } catch {
     // Ignore storage failures.
   }
+  window.dispatchEvent(new Event(THEME_EVENT))
 }
 
 export const nextTheme = (choice: ThemeChoice): ThemeChoice =>

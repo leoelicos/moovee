@@ -1,4 +1,5 @@
 import { getMovie } from '../api/omdb'
+import { getSimilar } from '../api/tmdb'
 import type { MovieDetails } from '../api/types'
 import { useAsync } from '../hooks/useAsync'
 import { keys } from '../lib/env'
@@ -6,7 +7,9 @@ import { Dialog } from './Dialog'
 import { Icon } from './Icon'
 import { Poster } from './Poster'
 import { ErrorMessage } from './States'
+import { RailSkeleton, TitleRail } from './TitleRail'
 import { Trailer } from './Trailer'
+import { WatchButton } from './WatchButton'
 
 export function MovieDialog({ id, onClose }: { id: string; onClose: () => void }) {
   const details = useAsync(id, (signal) => getMovie(id, keys.omdb, signal))
@@ -109,12 +112,35 @@ export function MovieBody({ movie }: { movie: MovieDetails }) {
             </div>
           ))}
       </dl>
-      <p>
+      <div className='detail__actions'>
+        <WatchButton movie={movie} />
         <a className='button' href={`https://www.imdb.com/title/${movie.id}/`} target='_blank' rel='noreferrer'>
           View on IMDb <Icon name='external' />
           <span className='visually-hidden'> (opens in a new tab)</span>
         </a>
-      </p>
+      </div>
+      <Similar id={movie.id} />
     </article>
+  )
+}
+
+/** Recommendations from TMDB. Quietly hidden when TMDB has nothing or is unavailable. */
+function Similar({ id }: { id: string }) {
+  const similar = useAsync(`similar:${id}`, (signal) => getSimilar(id, keys.tmdb, signal))
+  if (similar.status === 'error' || (similar.status === 'success' && similar.data.length === 0)) return null
+  return (
+    <section
+      className='section detail__similar'
+      aria-labelledby='similar-title'
+      aria-busy={similar.status !== 'success'}>
+      <h3 id='similar-title' className='section__title'>
+        More like this
+      </h3>
+      {similar.status === 'success' ? (
+        <TitleRail items={similar.data} label='Similar titles' />
+      ) : (
+        <RailSkeleton count={6} />
+      )}
+    </section>
   )
 }

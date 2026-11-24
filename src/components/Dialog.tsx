@@ -21,6 +21,7 @@ export function Dialog({ labelledBy, onClose, className = '', children }: Dialog
     if (!dialog) return
     const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null
     if (!dialog.open) dialog.showModal()
+    dialog.querySelector<HTMLElement>('[data-autofocus]')?.focus()
     document.documentElement.classList.add('has-dialog')
     const onCancel = (event: Event) => {
       event.preventDefault()

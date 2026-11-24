@@ -1,17 +1,36 @@
-import { Link } from 'react-router'
-import { getTrending } from '../api/tmdb'
+import { Link, useSearchParams } from 'react-router'
+import { getTrending, type TrendingKind } from '../api/tmdb'
 import type { TrendingMovie } from '../api/types'
 import { Icon } from '../components/Icon'
-import { Poster } from '../components/Poster'
 import { RecentSearches } from '../components/RecentSearches'
+import { RailSkeleton, TitleRail } from '../components/TitleRail'
 import { useAsync } from '../hooks/useAsync'
 import { keys } from '../lib/env'
 import { QUICK_PICKS, searchHref } from '../lib/query'
 
+const TABS: { value: TrendingKind; label: string }[] = [
+  { value: 'movie', label: 'Movies' },
+  { value: 'series', label: 'Series' }
+]
+
 export function DiscoverPage() {
-  const trending = useAsync('popular', (signal) => getTrending(keys.tmdb, signal))
-  const movies = trending.status === 'success' ? trending.data : []
-  const [hero, ...rest] = movies
+  const [params, setParams] = useSearchParams()
+  const kind: TrendingKind = params.get('t') === 'series' ? 'series' : 'movie'
+  const movies = useAsync('trending:movie', (signal) => getTrending(keys.tmdb, signal, 'movie'))
+  const rail = useAsync(`trending:${kind}`, (signal) => getTrending(keys.tmdb, signal, kind))
+  const hero = movies.status === 'success' ? movies.data[0] : undefined
+  const items = rail.status === 'success' ? rail.data.filter((m) => m.id !== hero?.id || m.kind !== hero.kind) : []
+
+  const choose = (next: TrendingKind) =>
+    setParams(
+      (prev) => {
+        const p = new URLSearchParams(prev)
+        if (next === 'series') p.set('t', 'series')
+        else p.delete('t')
+        return p
+      },
+      { replace: true }
+    )
 
   return (
     <div className='page page--discover'>
@@ -32,22 +51,31 @@ export function DiscoverPage() {
 
       <RecentSearches />
 
-      <section className='section' aria-labelledby='trending-title' aria-busy={trending.status === 'loading'}>
+      <section className='section' aria-labelledby='trending-title' aria-busy={rail.status === 'loading'}>
         <div className='section__header'>
           <h2 id='trending-title' className='section__title'>
-            {trending.status === 'error' ? 'Try one of these' : 'Popular right now'}
+            {rail.status === 'error' ? 'Try one of these' : 'Trending this week'}
           </h2>
+          {rail.status !== 'error' ? (
+            <fieldset className='segmented segmented--small'>
+              <legend className='visually-hidden'>Trending type</legend>
+              {TABS.map((tab) => (
+                <label key={tab.value} className='segmented__option'>
+                  <input
+                    type='radio'
+                    name='trending-kind'
+                    value={tab.value}
+                    checked={kind === tab.value}
+                    onChange={() => choose(tab.value)}
+                  />
+                  <span>{tab.label}</span>
+                </label>
+              ))}
+            </fieldset>
+          ) : null}
         </div>
-        {trending.status === 'loading' ? (
-          <ul className='rail' aria-hidden='true' data-testid='rail-skeleton'>
-            {Array.from({ length: 8 }, (_, i) => (
-              <li key={i} className='rail__item'>
-                <div className='poster skeleton' />
-              </li>
-            ))}
-          </ul>
-        ) : null}
-        {trending.status === 'error' ? (
+        {rail.status === 'loading' ? <RailSkeleton /> : null}
+        {rail.status === 'error' ? (
           <ul className='chips'>
             {QUICK_PICKS.map((title) => (
               <li key={title} className='chip chip--link'>
@@ -58,26 +86,8 @@ export function DiscoverPage() {
             ))}
           </ul>
         ) : null}
-        {rest.length > 0 ? (
-          <ul className='rail'>
-            {rest.map((movie, index) => (
-              <li key={movie.id} className='rail__item'>
-                <Link className='rail__link' to={searchHref({ q: movie.title })} viewTransition>
-                  <Poster src={movie.poster} title={movie.title} eager={index < 4} />
-                  <span className='rail__title'>{movie.title}</span>
-                  <span className='rail__meta'>
-                    {movie.year}
-                    {movie.rating !== null ? (
-                      <>
-                        {' · '}
-                        <Icon name='star' className='star' /> {movie.rating.toFixed(1)}
-                      </>
-                    ) : null}
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+        {items.length > 0 ? (
+          <TitleRail items={items} label={`Trending ${kind === 'series' ? 'series' : 'movies'}`} eager={4} />
         ) : null}
       </section>
     </div>
@@ -91,7 +101,7 @@ function Hero({ movie }: { movie: TrendingMovie }) {
         <img className='hero__backdrop' src={movie.backdrop} alt='' width={1280} height={720} fetchPriority='high' />
       ) : null}
       <div className='hero__content'>
-        <p className='hero__eyebrow'>#1 popular this week</p>
+        <p className='hero__eyebrow'>#1 trending this week</p>
         <h1 id='hero-title' className='hero__title'>
           {movie.title}
         </h1>

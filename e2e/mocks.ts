@@ -136,6 +136,24 @@ export const TRENDING = [
   ['Alien: Romulus', '2024-08-13', 7.2]
 ] as const
 
+export const TRENDING_TV = [
+  ['The Last of Us', '2023-01-15', 8.6],
+  ['Severance', '2022-02-17', 8.4],
+  ['Shōgun', '2024-02-27', 8.7],
+  ['The Bear', '2022-06-23', 8.2],
+  ['Arcane', '2021-11-06', 9.0],
+  ['Slow Horses', '2022-04-01', 8.1]
+] as const
+
+export const SIMILAR = [
+  ['The Empire Strikes Back', '1980-05-20', 8.4],
+  ['Return of the Jedi', '1983-05-25', 7.9],
+  ['Raiders of the Lost Ark', '1981-06-12', 7.9],
+  ['Alien', '1979-05-25', 8.2],
+  ['Blade Runner', '1982-06-25', 7.9],
+  ['E.T. the Extra-Terrestrial', '1982-06-11', 7.5]
+] as const
+
 export async function mockApis(page: Page, options: MockOptions = {}): Promise<MockLog> {
   const log: MockLog = { omdb: [], youtube: [] }
   const { omdb = 'ok', tmdb = 'ok', youtube = 'ok', omdbDelay = 0 } = options
@@ -155,17 +173,20 @@ export async function mockApis(page: Page, options: MockOptions = {}): Promise<M
 
   await page.route('https://api.themoviedb.org/**', (route) => {
     if (tmdb === 'error') return route.fulfill({ status: 500, body: 'error' })
+    const path = new URL(route.request().url()).pathname
+    if (path.includes('/find/')) return json(route, { movie_results: [{ id: 11 }], tv_results: [] })
+    const list = path.includes('/trending/tv') ? TRENDING_TV : path.includes('/recommendations') ? SIMILAR : TRENDING
+    const offset = list === TRENDING ? 0 : list === TRENDING_TV ? 20 : 40
     return json(route, {
-      results: TRENDING.map(([title, date, vote], i) => ({
-        id: i + 1,
-        title,
-        release_date: date,
+      results: list.map(([title, date, vote], i) => ({
+        id: offset + i + 1,
+        ...(list === TRENDING_TV ? { name: title, first_air_date: date } : { title, release_date: date }),
         overview:
-          i === 0
+          offset + i === 0
             ? 'Paul Atreides unites with Chani and the Fremen while on a path of revenge against the conspirators who destroyed his family.'
             : `${title} overview.`,
-        poster_path: `/poster-${i}.svg`,
-        backdrop_path: `/backdrop-${i}.svg`,
+        poster_path: `/poster-${offset + i}.svg`,
+        backdrop_path: `/backdrop-${offset + i}.svg`,
         vote_average: vote
       }))
     })
@@ -175,10 +196,9 @@ export async function mockApis(page: Page, options: MockOptions = {}): Promise<M
     const url = route.request().url()
     const index = Number(/-(\d+)\.svg$/.exec(url)?.[1] ?? 0)
     const wide = url.includes('backdrop')
-    return route.fulfill({
-      contentType: 'image/svg+xml',
-      body: posterSvg(TRENDING[index]?.[0] ?? 'Poster', index, wide)
-    })
+    const all = [...TRENDING, ...Array(20 - TRENDING.length).fill(['', '', 0]), ...TRENDING_TV]
+    const title = index >= 40 ? SIMILAR[index - 40]?.[0] : all[index]?.[0]
+    return route.fulfill({ contentType: 'image/svg+xml', body: posterSvg(title || 'Poster', index, wide) })
   })
 
   await page.route('https://m.media-amazon.com/**', (route) => {

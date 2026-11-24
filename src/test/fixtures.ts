@@ -60,6 +60,13 @@ export const tmdbResponse = {
   ]
 }
 
+export const tmdbTvResponse = {
+  results: [
+    { id: 11, name: 'The Last of Us', first_air_date: '2023-01-15', poster_path: '/tlou.jpg', vote_average: 8.6 },
+    { id: 12, name: 'Severance', first_air_date: '2022-02-17', poster_path: '/sev.jpg', vote_average: 8.4 }
+  ]
+}
+
 export const jsonResponse = (body: unknown, status = 200): Response =>
   new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } })
 

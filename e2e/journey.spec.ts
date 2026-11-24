@@ -103,7 +103,7 @@ test.describe('search to trailer', () => {
   test('trending cards search for their title', async ({ page }) => {
     await page.goto('/')
     await page
-      .getByRole('region', { name: 'Popular right now' })
+      .getByRole('region', { name: 'Trending this week' })
       .getByRole('link', { name: /Wicked/ })
       .click()
     await expect(page).toHaveURL(/\/search\?q=Wicked$/)

@@ -2,6 +2,7 @@ import type { RouteObject } from 'react-router'
 import { Layout } from './Layout'
 import { NotFoundPage, RouteErrorPage } from './pages/ErrorPages'
 import { SearchPage } from './pages/SearchPage'
+import { WatchlistPage } from './pages/WatchlistPage'
 
 export const routes: RouteObject[] = [
   {
@@ -12,6 +13,7 @@ export const routes: RouteObject[] = [
       { path: 'search', element: <SearchPage /> },
       // Links from the CRA version used /results?q=.
       { path: 'results', element: <SearchPage /> },
+      { path: 'watchlist', element: <WatchlistPage /> },
       { path: '*', element: <NotFoundPage /> }
     ]
   }
