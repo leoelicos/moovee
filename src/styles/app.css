@@ -1358,3 +1358,12 @@ kbd {
     display: none;
   }
 }
+
+.offline {
+  margin: 0;
+  padding: var(--space-2) var(--gutter);
+  background: var(--surface-2);
+  border-block-end: 1px solid var(--border);
+  text-align: center;
+  font-size: 0.9rem;
+}

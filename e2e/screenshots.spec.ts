@@ -30,6 +30,31 @@ for (const width of WIDTHS) {
       await page.getByRole('button', { name: 'Play trailer' }).click()
       await expect(page.locator('iframe')).toBeVisible()
       await shot('trailer', false)
+
+      // More like this sits at the bottom of the detail view.
+      await page.getByRole('dialog').getByRole('list', { name: 'Similar titles' }).scrollIntoViewIfNeeded()
+      await shot('similar', false)
+      await page.getByRole('dialog').getByRole('button', { name: 'Add to watchlist' }).click()
+      await page.keyboard.press('Escape')
+      for (const id of ['tt9000003', 'tt9000006', 'tt9000010']) {
+        await page.goto(`/search?q=star&m=${id}`)
+        await page.getByRole('dialog').getByRole('button', { name: 'Add to watchlist' }).click()
+      }
+      await page.goto('/watchlist')
+      await expect(page.locator('[data-card]')).toHaveCount(4)
+      await page.waitForLoadState('networkidle')
+      await shot('watchlist')
+
+      await page.goto('/?t=series')
+      await expect(page.getByRole('link', { name: /Severance/ })).toBeVisible()
+      await page.waitForLoadState('networkidle')
+      await shot('trending-series')
+
+      await page.goto('/')
+      await page.mouse.move(0, 0)
+      await page.keyboard.press('Control+k')
+      await page.getByRole('combobox').fill('st')
+      await shot('palette', false)
     })
   }
 }

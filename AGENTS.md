@@ -23,14 +23,16 @@ eslint.config.js           ESLint 9 flat config (typescript-eslint strict, jsx-a
 vercel.json                SPA rewrite to /index.html
 .github/workflows/ci.yml   the only CI workflow: quality job + e2e job
 src/
-  main.tsx, routes.tsx, Layout.tsx   entry, routes (/, /search, /results, *), shell + global shortcuts + dialogs
+  main.tsx, routes.tsx, Layout.tsx   entry (+ SW registration), routes (/, /search, /results, /watchlist, *), shell, shortcuts, dialogs, palette
   api/        http (typed ApiError), omdb, tmdb, youtube: fetch + parse + cache, no React
   hooks/      useAsync (abortable, tagged results), useSearchResults (paged), useMovieDialog (?m=), useRecent
-  lib/        env (keys), query (URL state, sort, cleanQuery), history, theme, dom, grid (arrow keys)
+  lib/        env (keys), query (URL state, sort, cleanQuery), history, watchlist, theme, dom, grid (arrow keys), pwa
   components/ Header, SearchBox, Filters, ResultsGrid, MovieCard, Poster, MovieDialog, Trailer, Dialog, States, ...
   pages/      SearchPage (results or Discover), DiscoverPage, ErrorPages
   test/       setup (dialog polyfill, keys, cache reset), fixtures, apiMocks, render helper, axe helper
-e2e/          mocks.ts (all network), fixtures.ts (axe + layout helpers), journey, keyboard, states, a11y, responsive, screenshots
+e2e/          mocks.ts (all network), fixtures.ts (axe + layout helpers), journey, keyboard, states, features, pwa, a11y, responsive, screenshots, live (opt-in)
+public/sw.js  offline app shell service worker (same-origin GET only; never caches API calls)
+scripts/check-size.mjs  gzipped bundle budget
 docs/         TESTING.md, ACCESSIBILITY.md, DEPLOY.md, screenshots/
 ```
 
@@ -48,9 +50,11 @@ Unit tests sit beside the code as `*.test.ts(x)`.
 - **No secrets in the repo.** Keys only come from env vars (`REACT_APP_*` or `VITE_*`); document new ones in `.env.example`.
 - **The network is always mocked in tests.** Unit tests use `mockFetch`/`mockAppApis`; Playwright uses `e2e/mocks.ts`,
   which aborts any request it doesn't know. Never depend on a real API in CI.
-- **State lives in the URL** (`q`, `type`, `y`, `sort`, `m`). Only non-default values are written. Keep links stable.
+- **State lives in the URL** (`q`, `type`, `y`, `sort`, `m`, and `t` on home). Only non-default values are written. Keep links stable.
 - **Accessibility is a gate.** axe must pass in light and dark; keyboard paths are tested; targets ≥ 24px; no sideways
   scrolling from 320px. Use native elements (`<button>`, `<dialog>`, radios, `<select>`) before ARIA.
 - **Spend API quota carefully.** Debounce search, cache results, look up trailers only on request (100 YouTube units each).
+- **Budgets:** `npm run size` must pass; lazy-load anything big rather than raising the budget casually.
+- **No floating controls over content:** the responsive spec fails if a fixed/sticky element covers a card.
 - Free tools only. Prettier and ESLint configs are the style guide; don't hand-format.
 - Specs and PRs should state removals explicitly.

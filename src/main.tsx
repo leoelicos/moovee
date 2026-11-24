@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router'
+import { registerServiceWorker } from './lib/pwa'
 import { routes } from './routes'
 import './styles/app.css'
 
@@ -12,3 +13,5 @@ createRoot(root).render(
     <RouterProvider router={createBrowserRouter(routes)} />
   </StrictMode>
 )
+
+void registerServiceWorker()

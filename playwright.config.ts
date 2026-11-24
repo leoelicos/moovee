@@ -14,6 +14,10 @@ export default defineConfig({
   use: {
     baseURL: `http://127.0.0.1:${PORT}`,
     trace: 'retain-on-failure',
+    // Only e2e/pwa.spec.ts opts back in, so cached shells never leak between tests.
+    serviceWorkers: 'block',
+    // Hides the Vercel preview toolbar when the live smoke test runs against a preview URL.
+    extraHTTPHeaders: { 'x-vercel-skip-toolbar': '1' },
     screenshot: 'only-on-failure'
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],

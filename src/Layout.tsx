@@ -4,6 +4,7 @@ import { Footer } from './components/Footer'
 import { CommandPalette } from './components/CommandPalette'
 import { Header } from './components/Header'
 import { MovieDialog } from './components/MovieDialog'
+import { OfflineBanner } from './components/OfflineBanner'
 import { ShortcutsDialog } from './components/ShortcutsDialog'
 import { useMovieDialog } from './hooks/useMovieDialog'
 import { focusSearch, isTypingTarget } from './lib/dom'
@@ -40,6 +41,7 @@ export function Layout() {
         Skip to content
       </a>
       <Header onShowShortcuts={() => setShortcuts(true)} onShowPalette={() => setPalette(true)} />
+      <OfflineBanner />
       <main id='main' tabIndex={-1}>
         <Outlet />
       </main>

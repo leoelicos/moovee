@@ -1,6 +1,6 @@
 # Testing
 
-`npm test` runs, in order: `tsc -b`, ESLint (`--max-warnings 0`), Prettier check, Vitest with coverage, Playwright.
+`npm test` runs, in order: `tsc -b`, ESLint (`--max-warnings 0`), Prettier check, Vitest with coverage, Playwright, then the gzipped bundle budget.
 CI runs the same steps (see `.github/workflows/ci.yml`). There is no manual test plan.
 
 ## Unit and integration (Vitest, jsdom)
@@ -32,3 +32,5 @@ OMDb, TMDB, YouTube, the trailer embed and both image CDNs with deterministic fi
 
 Mock switches (`test.use({ mocks: { omdb: 'error' } })`): `omdb: ok | error | invalid-key`, `tmdb: ok | error`,
 `youtube: ok | none | error`, `omdbDelay` (ms).
+
+Service workers are blocked in every spec except `pwa.spec.ts`, so cached shells can't leak between tests.

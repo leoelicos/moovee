@@ -13,9 +13,14 @@ Search any movie or series and watch its trailer, fast.
 - **Rich detail view.** Plot, cast, crew, awards, box office and IMDb / Rotten Tomatoes / Metacritic ratings,
   with the YouTube trailer one click (or Enter) away. Each trailer lookup is cached on the device to save YouTube quota.
 - **Filters and sorting.** Movies / Series, a release year, and best match / newest / oldest / A–Z. Load more pages on demand.
-- **Popular right now.** The home page leads with TMDB's popular list. If TMDB is down, quick picks keep it useful.
+- **Trending this week**, Movies or Series (`?t=series`), from TMDB. If TMDB is down, quick picks keep the home page useful.
+- **Watchlist** saved on the device (no account): save from any detail view, see it at `/watchlist`, count in the header.
+- **More like this**: TMDB recommendations for the open title, one tap from a new search.
+- **Command palette** (`Ctrl/⌘ K`): search, reopen recent searches and saved titles, jump to pages, switch theme.
+- **Installable PWA** with an offline app shell (hand-written service worker; APIs are never cached) and an offline notice.
+- **Shareable links** with Open Graph / Twitter card tags and a branded preview image.
 - **Recent searches**, kept on the device (and migrated from the old version's storage).
-- **Keyboard first.** `/` focus search · `↓` into results · arrows move through the grid row by row · `Home`/`End` ·
+- **Keyboard first.** `/` focus search · `Ctrl/⌘ K` command palette · `↓` into results · arrows move through the grid row by row · `Home`/`End` ·
   `Enter` open · `Esc` clear or close · `?` shortcut list.
 - **Accessible.** WCAG 2.2 AA checked with axe in unit and browser tests, a skip link, native modal dialogs with
   focus kept inside and returned afterwards, visible focus everywhere, 24px+ targets, live status for result counts.
@@ -36,11 +41,11 @@ npm run dev                  # http://localhost:5173
 
 ### API keys
 
-| Service      | Used for                     | Env var (either name works)            | Free key                                                                                     |
-| ------------ | ---------------------------- | -------------------------------------- | -------------------------------------------------------------------------------------------- |
-| OMDb         | Search and title details     | `REACT_APP_OMDB_KEY` / `VITE_OMDB_KEY` | [omdbapi.com/apikey.aspx](https://www.omdbapi.com/apikey.aspx) (1,000 calls a day)           |
-| TMDB (v3)    | Popular list and hero images | `REACT_APP_TMDB_KEY` / `VITE_TMDB_KEY` | [themoviedb.org/settings/api](https://www.themoviedb.org/settings/api)                       |
-| YouTube Data | Finding the trailer          | `REACT_APP_GAPI_KEY` / `VITE_GAPI_KEY` | [Google Cloud console](https://console.cloud.google.com/apis/library/youtube.googleapis.com) |
+| Service      | Used for                       | Env var (either name works)            | Free key                                                                                     |
+| ------------ | ------------------------------ | -------------------------------------- | -------------------------------------------------------------------------------------------- |
+| OMDb         | Search and title details       | `REACT_APP_OMDB_KEY` / `VITE_OMDB_KEY` | [omdbapi.com/apikey.aspx](https://www.omdbapi.com/apikey.aspx) (1,000 calls a day)           |
+| TMDB (v3)    | Trending, hero, More like this | `REACT_APP_TMDB_KEY` / `VITE_TMDB_KEY` | [themoviedb.org/settings/api](https://www.themoviedb.org/settings/api)                       |
+| YouTube Data | Finding the trailer            | `REACT_APP_GAPI_KEY` / `VITE_GAPI_KEY` | [Google Cloud console](https://console.cloud.google.com/apis/library/youtube.googleapis.com) |
 
 The `REACT_APP_*` names are the ones the Create React App version used, so the existing Vercel project variables keep
 working unchanged. Keys are never committed: `.env*` files are git-ignored apart from `.env.example`.

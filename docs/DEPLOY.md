@@ -19,3 +19,16 @@ The app is a static SPA. On Vercel:
   Rotating that key in the TMDB dashboard is recommended; this PR does not rewrite history.
 - To keep keys fully server-side later, add a small serverless proxy (for example a Vercel Function) and point
   `src/api/*` at it. Not done here to avoid changing hosting.
+
+## Vercel preview toolbar
+
+Preview deployments show Vercel's floating toolbar button (bottom right). It is injected by Vercel, not by Moovee, and
+does not appear in production. It can be turned off for previews in the Vercel project settings
+(Settings → General → Vercel Toolbar) or with `VERCEL_PREVIEW_FEEDBACK_ENABLED=0`; neither was changed here. Automated
+runs send `x-vercel-skip-toolbar: 1` (see `playwright.config.ts`), and the responsive e2e spec guarantees Moovee's own
+UI never puts a floating control over result cards.
+
+## PWA
+
+`public/sw.js` caches the app shell and hashed assets for offline use; API requests (other origins) pass straight
+through. Bump `VERSION` in the worker to force old caches out.
